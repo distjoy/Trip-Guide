@@ -1,3 +1,4 @@
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -7,6 +8,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,9 +35,11 @@ fun LandingScreen(){
         // Page Button, Login
         // Page Button, Sign up
 
-    Column {
+    Column(modifier = Modifier.padding(15.dp)) {
         Image(bitmap = ImageBitmap.Companion.imageResource(id = R.mipmap.onboarding_banner), contentDescription = "Discover places banner",
-            Modifier.fillMaxWidth().height(400.dp))
+            Modifier
+                .fillMaxWidth(1f)
+                .height(500.dp))
         Text(text = "Discover best places to go to vacation \uD83D\uDE0D",
             fontSize = 30.sp,
             lineHeight = 35.sp,
@@ -42,22 +47,44 @@ fun LandingScreen(){
             fontFamily = DMSansFamily,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth().padding(PaddingValues(horizontal = 20.dp, vertical = 10.dp)))
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(PaddingValues( vertical = 10.dp)))
         Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vitae sapien viverra laoreet fusce cras nibh. ",
               fontSize = 14.sp,
             fontFamily = DMSansFamily,
             fontWeight = FontWeight.Normal,
             textAlign = TextAlign.Center,
             color = Color(0xFF828F9C),
-            modifier = Modifier.fillMaxWidth().padding(PaddingValues(horizontal = 20.dp, vertical = 0.dp))
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(PaddingValues( vertical = 0.dp))
         )
         Button(onClick = { /*TODO*/ },
-            Modifier.fillMaxWidth().padding(PaddingValues(horizontal = 20.dp, vertical = 10.dp))) {
-            Text("Login")
+            Modifier
+                .fillMaxWidth()
+                .padding(PaddingValues(vertical = 10.dp)),
+            colors = ButtonDefaults.buttonColors (
+                Color(0xFFDE7254),
+                Color(0xFFFFFFFF),
+                        Color(0xC9DE7254),
+                        Color(0xC9FFFFFF),
+            )
+            ) {
+            Text("Login",fontSize = 16.sp,
+                fontFamily = DMSansFamily,
+                fontWeight = FontWeight.Bold)
         }
         OutlinedButton(onClick = { /*TODO*/ },
-            Modifier.fillMaxWidth().padding(PaddingValues(horizontal = 20.dp, vertical = 0.dp)) ) {
-            Text("Sign Up")
+            Modifier
+                .fillMaxWidth()
+                .padding(PaddingValues( vertical = 0.dp)),
+            border = BorderStroke(1.dp,Color(0xFFE7E7EF)),
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xff000000))
+            ) {
+            Text("Sign Up",       fontSize = 16.sp,
+                fontFamily = DMSansFamily,
+                fontWeight = FontWeight.Bold)
         }
     }
 
