@@ -66,7 +66,7 @@ fun SignupScreen() {
                 .padding(PaddingValues(vertical = 0.dp))
         )
 
-        TextField(
+        OutlinedTextField(
             value = "Full Name",
             modifier = Modifier
                 .fillMaxWidth()
@@ -120,7 +120,7 @@ fun SignupScreen() {
             colors = OutlinedTextFieldDefaults.colors(unfocusedBorderColor = Color(0xFFE7E7EF))
         )
 
-        TextField(value = "Re-enter Password",
+        OutlinedTextField(value = "Re-enter Password",
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(PaddingValues(vertical = 10.dp)),
@@ -132,7 +132,10 @@ fun SignupScreen() {
                 color = Color(0xFF828F9C),
             ), onValueChange = {
 
-            })
+            },
+            shape = RoundedCornerShape(CornerSize(30.dp)),
+            colors = OutlinedTextFieldDefaults.colors(unfocusedBorderColor = Color(0xFFE7E7EF))
+        )
 
 
         Button(
