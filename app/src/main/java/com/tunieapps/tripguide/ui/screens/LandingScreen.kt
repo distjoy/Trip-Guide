@@ -22,11 +22,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import com.tunieapps.tripguide.DMSansFamily
 import com.tunieapps.tripguide.R
 
 @Composable
-fun LandingScreen(){
+fun LandingScreen(launchSignup : ()->Unit){
 
     // Row
         // Image - Banner
@@ -49,7 +50,7 @@ fun LandingScreen(){
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(PaddingValues( vertical = 10.dp)))
+                .padding(PaddingValues(vertical = 10.dp)))
         Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vitae sapien viverra laoreet fusce cras nibh. ",
               fontSize = 14.sp,
             fontFamily = DMSansFamily,
@@ -58,9 +59,11 @@ fun LandingScreen(){
             color = Color(0xFF828F9C),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(PaddingValues( vertical = 0.dp))
+                .padding(PaddingValues(vertical = 0.dp))
         )
-        Button(onClick = { /*TODO*/ },
+        Button(onClick = {
+                       launchSignup()
+        },
             Modifier
                 .fillMaxWidth()
                 .padding(PaddingValues(vertical = 10.dp)),
@@ -78,7 +81,7 @@ fun LandingScreen(){
         OutlinedButton(onClick = { /*TODO*/ },
             Modifier
                 .fillMaxWidth()
-                .padding(PaddingValues( vertical = 0.dp)),
+                .padding(PaddingValues(vertical = 0.dp)),
             border = BorderStroke(1.dp,Color(0xFFE7E7EF)),
             colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xff000000))
             ) {

@@ -11,6 +11,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -24,23 +25,29 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            TripGuideTheme {
-                // A surface container using the 'background' color from the theme
-                val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = "landing") {
-                    composable("landing") {
-                        Surface(
-                            modifier = Modifier.fillMaxSize(),
-                            color = MaterialTheme.colorScheme.background
-                        ) {
-                            LandingScreen()
-                        }
 
-                    }
-                    composable("signup") {
+            // A surface container using the 'background' color from the theme
+            val navController = rememberNavController()
+            NavHost(navController = navController, startDestination = "landing") {
+                composable("landing") {
+                    TripGuideTheme {
                         Surface(
                             modifier = Modifier.fillMaxSize(),
-                            color = MaterialTheme.colorScheme.background
+                            color = Color(0xFFFFFFFF)
+                        ) {
+                            LandingScreen(
+                                {
+                                    navController.navigate("signup")
+                                })
+                        }
+                    }
+
+                }
+                composable("signup") {
+                    TripGuideTheme {
+                        Surface(
+                            modifier = Modifier.fillMaxSize(),
+                            color = Color(0xFFFFFFFF)
                         ) {
                             SignupScreen()
                         }
@@ -49,6 +56,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
     }
 }
 
@@ -64,7 +72,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     TripGuideTheme {
-        LandingScreen()
+        LandingScreen({})
     }
 }
 

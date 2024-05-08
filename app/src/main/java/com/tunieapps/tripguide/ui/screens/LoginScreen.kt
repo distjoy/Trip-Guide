@@ -10,9 +10,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -20,11 +23,15 @@ import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -37,7 +44,7 @@ import com.tunieapps.tripguide.R
 import com.tunieapps.tripguide.ui.theme.TripGuideTheme
 
 @Composable
-fun SignupScreen() {
+fun LoginScreen() {
 
 
     Column(modifier = Modifier.padding(15.dp)) {
@@ -138,19 +145,14 @@ fun SignupScreen() {
         )
 
 
-        Button(
+        IconButton(
             onClick = { /*TODO*/ },
             Modifier
                 .fillMaxWidth()
-                .padding(PaddingValues(vertical = 10.dp)),
-            colors = ButtonDefaults.buttonColors(
-                Color(0xFFDE7254),
-                Color(0xFFFFFFFF),
-                Color(0xC9DE7254),
-                Color(0xC9FFFFFF),
-            )
+                .padding(PaddingValues(vertical = 10.dp))
         ) {
-
+            Image(painter = painterResource(id = R.drawable.flat_color_icons_google), contentDescription = "google logo",
+                modifier = Modifier.align(alignment = Alignment.TopStart))
             Text(
                 "Login", fontSize = 16.sp,
                 fontFamily = DMSansFamily,
@@ -164,8 +166,8 @@ fun SignupScreen() {
 
 @Composable
 @Preview(showBackground = true)
-fun SignupPreview() {
+fun LoginPreview() {
     TripGuideTheme {
-        SignupScreen()
+        LoginScreen()
     }
 }
