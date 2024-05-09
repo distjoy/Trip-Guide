@@ -50,7 +50,7 @@ fun LoginScreen() {
     Column(modifier = Modifier.padding(15.dp)) {
 
         Text(
-            text = "Signup",
+            text = "Login",
             fontSize = 30.sp,
             lineHeight = 35.sp,
             color = Color(0xFF101018),
@@ -71,24 +71,6 @@ fun LoginScreen() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(PaddingValues(vertical = 0.dp))
-        )
-
-        OutlinedTextField(
-            value = "Full Name",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(PaddingValues(vertical = 10.dp)),
-            textStyle = TextStyle(
-                fontSize = 15.sp,
-                fontFamily = DMSansFamily,
-                fontWeight = FontWeight.Medium,
-                textAlign = TextAlign.Left,
-                color = Color(0xFF828F9C),
-            ), onValueChange = {
-
-            },
-            shape = RoundedCornerShape(CornerSize(30.dp)),
-            colors = OutlinedTextFieldDefaults.colors(unfocusedBorderColor = Color(0xFFE7E7EF))
         )
 
         OutlinedTextField(
@@ -127,32 +109,21 @@ fun LoginScreen() {
             colors = OutlinedTextFieldDefaults.colors(unfocusedBorderColor = Color(0xFFE7E7EF))
         )
 
-        OutlinedTextField(value = "Re-enter Password",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(PaddingValues(vertical = 10.dp)),
-            textStyle = TextStyle(
-                fontSize = 15.sp,
-                fontFamily = DMSansFamily,
-                fontWeight = FontWeight.Medium,
-                textAlign = TextAlign.Left,
-                color = Color(0xFF828F9C),
-            ), onValueChange = {
-
-            },
-            shape = RoundedCornerShape(CornerSize(30.dp)),
-            colors = OutlinedTextFieldDefaults.colors(unfocusedBorderColor = Color(0xFFE7E7EF))
-        )
 
 
-        IconButton(
+        Button(
             onClick = { /*TODO*/ },
             Modifier
                 .fillMaxWidth()
-                .padding(PaddingValues(vertical = 10.dp))
+                .padding(PaddingValues(vertical = 10.dp)),
+            colors = ButtonDefaults.buttonColors(
+                Color(0xFFDE7254),
+                Color(0xFFFFFFFF),
+                Color(0xC9DE7254),
+                Color(0xC9FFFFFF),
+            )
         ) {
-            Image(painter = painterResource(id = R.drawable.flat_color_icons_google), contentDescription = "google logo",
-                modifier = Modifier.align(alignment = Alignment.TopStart))
+
             Text(
                 "Login", fontSize = 16.sp,
                 fontFamily = DMSansFamily,
@@ -160,6 +131,25 @@ fun LoginScreen() {
             )
         }
 
+        OutlinedButton(onClick = { /*TODO*/ },
+            Modifier.padding(top = 10.dp)
+                .fillMaxWidth()
+                ,
+            border = BorderStroke(1.dp,Color(0xFFE7E7EF)),
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xff000000))
+        ) {
+            Image(painter = painterResource(id = R.drawable.flat_color_icons_google), contentDescription = "google logo",
+                modifier = Modifier.align(Alignment.CenterVertically).padding(vertical = 5.dp)
+            )
+            Text(
+                "Login with google", fontSize = 16.sp,
+                fontFamily = DMSansFamily,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .align(alignment = Alignment.CenterVertically)
+                    .padding(start = 10.dp )
+            )
+        }
     }
 
 }
