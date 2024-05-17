@@ -25,6 +25,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import com.tunieapps.tripguide.DMSansFamily
 import com.tunieapps.tripguide.R
+import com.tunieapps.tripguide.ui.TgPrimaryButton
+import com.tunieapps.tripguide.ui.theme.bodyText
+import com.tunieapps.tripguide.ui.theme.heading1
 
 @Composable
 fun LandingScreen(launchSignup : ()->Unit){
@@ -42,42 +45,21 @@ fun LandingScreen(launchSignup : ()->Unit){
                 .fillMaxWidth(1f)
                 .height(500.dp))
         Text(text = "Discover best places to go to vacation \uD83D\uDE0D",
-            fontSize = 30.sp,
-            lineHeight = 35.sp,
-            color = Color(0xFF101018),
-            fontFamily = DMSansFamily,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
+            style = heading1,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(PaddingValues(vertical = 10.dp)))
         Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vitae sapien viverra laoreet fusce cras nibh. ",
-              fontSize = 14.sp,
-            fontFamily = DMSansFamily,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Center,
-            color = Color(0xFF828F9C),
+              style = bodyText,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(PaddingValues(vertical = 0.dp))
         )
-        Button(onClick = {
+        TgPrimaryButton(onClick = {
                        launchSignup()
         },
-            Modifier
-                .fillMaxWidth()
-                .padding(PaddingValues(vertical = 10.dp)),
-            colors = ButtonDefaults.buttonColors (
-                Color(0xFFDE7254),
-                Color(0xFFFFFFFF),
-                        Color(0xC9DE7254),
-                        Color(0xC9FFFFFF),
-            )
-            ) {
-            Text("Login",fontSize = 16.sp,
-                fontFamily = DMSansFamily,
-                fontWeight = FontWeight.Bold)
-        }
+           text = "Login")
+
         OutlinedButton(onClick = { /*TODO*/ },
             Modifier
                 .fillMaxWidth()
