@@ -63,6 +63,41 @@ private val LightColorScheme = lightColorScheme(
     textAlign = TextAlign.Left,
     color = Color(0xFF828F9C)
 )
+val bodyTextAccent = TextStyle(
+    fontSize = 14.sp,
+    fontFamily = DMSansFamily,
+    fontWeight = FontWeight.Normal,
+    textAlign = TextAlign.Left,
+    color = Color(0xFFDE7254)
+)
+val bodyTextLight = TextStyle(
+    fontSize = 14.sp,
+    fontFamily = DMSansFamily,
+    fontWeight = FontWeight.Normal,
+    textAlign = TextAlign.Left,
+    color = Color(0xFFFAF9F9)
+)
+val subTitle = TextStyle(
+    fontSize = 10.sp,
+    fontFamily = DMSansFamily,
+    fontWeight = FontWeight.Medium,
+    textAlign = TextAlign.Left,
+    color = Color(0xFF828F9C)
+)
+val subTitleDark = TextStyle(
+    fontSize = 10.sp,
+    fontFamily = DMSansFamily,
+    fontWeight = FontWeight.Medium,
+    textAlign = TextAlign.Left,
+    color = Color(0xFF101018)
+)
+val subTitleDark2 = TextStyle(
+    fontSize = 10.sp,
+    fontFamily = DMSansFamily,
+    fontWeight = FontWeight.Bold,
+    textAlign = TextAlign.Left,
+    color = Color(0xFF101018)
+)
 val heading1 = TextStyle(
     fontSize = 30.sp,
     lineHeight = 35.sp,
@@ -70,6 +105,20 @@ val heading1 = TextStyle(
     fontFamily = DMSansFamily,
     fontWeight = FontWeight.Bold,
     textAlign = TextAlign.Left
+)
+val heading3 = TextStyle(
+    fontSize = 20.sp,
+    color = Color(0xFF101018),
+    fontFamily = DMSansFamily,
+    fontWeight = FontWeight.Bold,
+    textAlign = TextAlign.Left
+)
+val bodyHeading = TextStyle(
+    fontSize = 14.sp,
+    fontFamily = DMSansFamily,
+    fontWeight = FontWeight.Bold,
+    textAlign = TextAlign.Left,
+    color = Color(0xFF101018)
 )
 
 @Composable

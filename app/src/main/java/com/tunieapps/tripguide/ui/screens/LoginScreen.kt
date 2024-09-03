@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tunieapps.tripguide.DMSansFamily
 import com.tunieapps.tripguide.R
+import com.tunieapps.tripguide.ui.Screen
 import com.tunieapps.tripguide.ui.TgOutlinedImageButton
 import com.tunieapps.tripguide.ui.TgOutlinedTextField
 import com.tunieapps.tripguide.ui.TgPrimaryButton
@@ -49,7 +50,7 @@ import com.tunieapps.tripguide.ui.theme.bodyText
 import com.tunieapps.tripguide.ui.theme.heading1
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(launcher : (screen : Screen) -> Unit) {
 
 
     Column(modifier = Modifier.padding(15.dp)) {
@@ -98,6 +99,6 @@ fun LoginScreen() {
 @Preview(showBackground = true)
 fun LoginPreview() {
     TripGuideTheme {
-        LoginScreen()
+        LoginScreen({})
     }
 }
