@@ -46,7 +46,8 @@ import com.tunieapps.tripguide.DMSansFamily
 
 
 @Composable
-fun TgOutlinedTextField( textVal : String,onValueChange : (String) -> Unit ){
+fun TgOutlinedTextField( textVal : String,onValueChange : (String) -> Unit,
+                         startIcon :  @Composable() (() -> Unit)? = null,endIcon :  @Composable() (() -> Unit)? = null){
     var value by remember { mutableStateOf("") }
     OutlinedTextField(
         enabled = true,
@@ -65,6 +66,8 @@ fun TgOutlinedTextField( textVal : String,onValueChange : (String) -> Unit ){
             value = it
             onValueChange(it)
         },
+        leadingIcon = startIcon,
+        trailingIcon = endIcon,
         shape = RoundedCornerShape(CornerSize(30.dp)),
         colors = TextFieldDefaults.colors(
             focusedContainerColor = Color(0x00FFFFFF),
