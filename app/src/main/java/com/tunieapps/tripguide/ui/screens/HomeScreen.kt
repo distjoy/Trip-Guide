@@ -76,10 +76,13 @@ fun SearchBar(){
             Image(
                 painter = painterResource(id = R.drawable.filter),
                 modifier = Modifier
+                    .padding(vertical =  10.dp, horizontal =  10.dp)
                     .background(Color(0xFFDE7254), shape = CircleShape)
                     .width(40.dp)
                     .height(40.dp)
-                    .padding(10.dp)
+                    .padding(vertical =  10.dp, horizontal =  10.dp)
+
+
                 ,
                 contentDescription = "Discover places banner",
                 colorFilter = ColorFilter.tint(Color(0xFFFFFFFF))
@@ -128,6 +131,8 @@ fun TopBar(){
         }
     //}
 }
+
+
 
 @Composable
 @Preview(showBackground = true)

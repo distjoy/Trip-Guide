@@ -6,21 +6,29 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.OutlinedTextFieldDefaults.contentPadding
+
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,11 +40,16 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.ClipOp
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.drawscope.clipRect
+import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
@@ -55,7 +68,7 @@ fun TgOutlinedTextField( textVal : String,onValueChange : (String) -> Unit,
         label = {Text(text = textVal)},
         modifier = Modifier
             .fillMaxWidth()
-            .padding(PaddingValues(vertical = 10.dp)),
+            .padding(PaddingValues( vertical =  10.dp)),
         textStyle = TextStyle(
             fontSize = 15.sp,
             fontFamily = DMSansFamily,
@@ -68,6 +81,7 @@ fun TgOutlinedTextField( textVal : String,onValueChange : (String) -> Unit,
         },
         leadingIcon = startIcon,
         trailingIcon = endIcon,
+
         shape = RoundedCornerShape(CornerSize(30.dp)),
         colors = TextFieldDefaults.colors(
             focusedContainerColor = Color(0x00FFFFFF),
@@ -83,7 +97,6 @@ fun TgOutlinedTextField( textVal : String,onValueChange : (String) -> Unit,
             )
     )
 }
-
 
 internal fun Modifier.outlineCutout(labelSize: Size, paddingValues: PaddingValues) =
     this.drawWithContent {
