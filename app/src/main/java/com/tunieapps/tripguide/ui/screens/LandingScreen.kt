@@ -21,7 +21,6 @@ import com.tunieapps.tripguide.DMSansFamily
 import com.tunieapps.tripguide.R
 import com.tunieapps.tripguide.ui.Screen
 import com.tunieapps.tripguide.ui.TgPrimaryButton
-import com.tunieapps.tripguide.ui.screens.HomeScreen
 import com.tunieapps.tripguide.ui.theme.TripGuideTheme
 import com.tunieapps.tripguide.ui.theme.bodyText
 import com.tunieapps.tripguide.ui.theme.heading1

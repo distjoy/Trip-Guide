@@ -1,23 +1,18 @@
-package com.tunieapps.tripguide.ui.screens
+package com.tunieapps.tripguide.ui.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.AppBarDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material.TopAppBar
-
 
 
 import androidx.compose.runtime.Composable
@@ -25,8 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,20 +29,32 @@ import androidx.compose.ui.unit.sp
 import com.tunieapps.tripguide.DMSansFamily
 import com.tunieapps.tripguide.R
 import com.tunieapps.tripguide.ui.Screen
+import com.tunieapps.tripguide.ui.TgFilledTextField
 import com.tunieapps.tripguide.ui.TgOutlinedTextField
 import com.tunieapps.tripguide.ui.theme.TripGuideTheme
+import com.tunieapps.tripguide.ui.theme.bodyText
+import com.tunieapps.tripguide.ui.theme.heading1
+import com.tunieapps.tripguide.ui.theme.heading3
 
 
 @Composable
 fun HomeScreen(launcher: (screen : Screen) -> Unit){
     Scaffold(
         topBar = { TopBar() },
-        bottomBar = {}
+        bottomBar = {},
+        containerColor = Color(0xFFFAF9F9)
     ) { padding ->
         Column(modifier = Modifier.padding(top = padding.calculateTopPadding(),
             start = padding.calculateStartPadding(LayoutDirection.Ltr)+10.dp,
             end = padding.calculateEndPadding(LayoutDirection.Ltr)+10.dp, )) {
             SearchBar()
+            Text(
+                "Discover Places",
+                style = heading3
+            )
+
+            FilterChips(size = 5)
+
         }
 
     }
@@ -58,7 +63,7 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
 
 @Composable
 fun SearchBar(){
-    TgOutlinedTextField(
+    TgFilledTextField(
         textVal = "Full Name",
         onValueChange = {
 
@@ -76,11 +81,11 @@ fun SearchBar(){
             Image(
                 painter = painterResource(id = R.drawable.filter),
                 modifier = Modifier
-                    .padding(vertical =  10.dp, horizontal =  10.dp)
+                    .padding(vertical = 10.dp, horizontal = 10.dp)
                     .background(Color(0xFFDE7254), shape = CircleShape)
                     .width(40.dp)
                     .height(40.dp)
-                    .padding(vertical =  10.dp, horizontal =  10.dp)
+                    .padding(vertical = 10.dp, horizontal = 10.dp)
 
 
                 ,
