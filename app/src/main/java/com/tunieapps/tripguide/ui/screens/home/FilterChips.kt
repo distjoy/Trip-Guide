@@ -22,13 +22,13 @@ import com.tunieapps.tripguide.ui.theme.bodyText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilterChips(size: Int){
+fun FilterChips(size: Int,onclick : () -> Unit){
 
     LazyRow {
         items(count = size){
             FilterChip(
                 modifier = Modifier.padding(paddingValues = PaddingValues(end = 10.dp)),
-                onClick = { },
+                onClick = onclick,
                 label = {
                     Text("Filter chip", style = bodyText)
                 },

@@ -21,6 +21,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.tunieapps.tripguide.ui.Screen
+import com.tunieapps.tripguide.ui.screens.home.HomeScreen
 import com.tunieapps.tripguide.ui.theme.TripGuideTheme
 
 class MainActivity : ComponentActivity() {
@@ -39,7 +40,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = Color(0xFFFFFFFF)
                         ) {
-                            LandingScreen {
+                            HomeScreen {
                                 navigator(navController, it)
                             }
                         }

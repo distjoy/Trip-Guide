@@ -2,6 +2,8 @@ package com.tunieapps.tripguide.ui.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.calculateEndPadding
@@ -12,10 +14,16 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,15 +39,23 @@ import com.tunieapps.tripguide.R
 import com.tunieapps.tripguide.ui.Screen
 import com.tunieapps.tripguide.ui.TgFilledTextField
 import com.tunieapps.tripguide.ui.TgOutlinedTextField
+import com.tunieapps.tripguide.ui.screens.LoginViewModel
 import com.tunieapps.tripguide.ui.theme.TripGuideTheme
 import com.tunieapps.tripguide.ui.theme.bodyText
 import com.tunieapps.tripguide.ui.theme.heading1
 import com.tunieapps.tripguide.ui.theme.heading3
+import kotlinx.coroutines.launch
 
 
 @Composable
 fun HomeScreen(launcher: (screen : Screen) -> Unit){
+    val vm = remember { LoginViewModel() }
+    val snackbarHostState = remember { SnackbarHostState() }
+
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(snackbarHostState)
+        },
         topBar = { TopBar() },
         bottomBar = {},
         containerColor = Color(0xFFFAF9F9)
@@ -47,13 +63,29 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
         Column(modifier = Modifier.padding(top = padding.calculateTopPadding(),
             start = padding.calculateStartPadding(LayoutDirection.Ltr)+10.dp,
             end = padding.calculateEndPadding(LayoutDirection.Ltr)+10.dp, )) {
-            SearchBar()
+
+            val snackbarScope = rememberCoroutineScope()
+           // if(vm.showError.collectAsState().value== LoginViewModel.Error.CoreError)
+                LaunchedEffect(vm.showError)  {
+
+                    snackbarHostState.showSnackbar(message = "sample")
+                }
+            SearchBar({
+                vm.updateError()
+            },{
+
+            })
             Text(
                 "Discover Places",
                 style = heading3
             )
 
-            FilterChips(size = 5)
+            FilterChips(size = 5,{
+                //snackbarHostState.currentSnackbarData?.dismiss()
+                vm.resetError()
+            })
+
+            BoxItem(size = 5)
 
         }
 
@@ -62,7 +94,7 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
 
 
 @Composable
-fun SearchBar(){
+fun SearchBar(onclick : () -> Unit,reset : () -> Unit){
     TgFilledTextField(
         textVal = "Full Name",
         onValueChange = {
@@ -73,7 +105,9 @@ fun SearchBar(){
                 painter = painterResource(id = R.drawable.search_normal),
                 contentDescription = "Discover places banner",
                 Modifier
-                    .height(16.dp),
+                    .height(16.dp).clickable {
+                        reset()
+                    },
                 colorFilter = ColorFilter.tint(Color(0xFFDE7254))
             )
         },
@@ -86,6 +120,9 @@ fun SearchBar(){
                     .width(40.dp)
                     .height(40.dp)
                     .padding(vertical = 10.dp, horizontal = 10.dp)
+                    .clickable{
+                        onclick()
+                    }
 
 
                 ,
