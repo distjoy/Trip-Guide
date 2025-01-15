@@ -22,7 +22,7 @@ import com.tunieapps.tripguide.ui.theme.bodyText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilterChips(size: Int,onclick : () -> Unit){
+fun FilterChips(size: Int,onclick : () -> Unit={}){
 
     LazyRow {
         items(count = size){

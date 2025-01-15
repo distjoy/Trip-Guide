@@ -23,7 +23,9 @@ import androidx.navigation.compose.rememberNavController
 import com.tunieapps.tripguide.ui.Screen
 import com.tunieapps.tripguide.ui.screens.home.HomeScreen
 import com.tunieapps.tripguide.ui.theme.TripGuideTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,14 +37,16 @@ class MainActivity : ComponentActivity() {
 
             NavHost(navController = navController, startDestination = Screen.Landing.screenTag) {
                 composable(Screen.Landing.screenTag) {
+                        backStackEntry ->
+
                     TripGuideTheme {
                         Surface(
                             modifier = Modifier.fillMaxSize(),
                             color = Color(0xFFFFFFFF)
                         ) {
-                            HomeScreen {
+                            HomeScreen ({
                                 navigator(navController, it)
-                            }
+                            })
                         }
                     }
 

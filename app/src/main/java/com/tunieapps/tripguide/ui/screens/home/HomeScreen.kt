@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -45,12 +46,17 @@ import com.tunieapps.tripguide.ui.theme.bodyText
 import com.tunieapps.tripguide.ui.theme.heading1
 import com.tunieapps.tripguide.ui.theme.heading3
 import kotlinx.coroutines.launch
-
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil3.compose.AsyncImage
 
 @Composable
-fun HomeScreen(launcher: (screen : Screen) -> Unit){
-    val vm = remember { LoginViewModel() }
+fun HomeScreen(launcher: (screen : Screen) -> Unit,vm : LoginViewModel = hiltViewModel()){
+   // val
     val snackbarHostState = remember { SnackbarHostState() }
+
 
     Scaffold(
         snackbarHost = {
@@ -64,14 +70,15 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
             start = padding.calculateStartPadding(LayoutDirection.Ltr)+10.dp,
             end = padding.calculateEndPadding(LayoutDirection.Ltr)+10.dp, )) {
 
-            val snackbarScope = rememberCoroutineScope()
+     /*       val snackbarScope = rememberCoroutineScope()
            // if(vm.showError.collectAsState().value== LoginViewModel.Error.CoreError)
                 LaunchedEffect(vm.showError)  {
 
                     snackbarHostState.showSnackbar(message = "sample")
-                }
+                }*/
+
             SearchBar({
-                vm.updateError()
+
             },{
 
             })
@@ -79,16 +86,26 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
                 "Discover Places",
                 style = heading3
             )
-
-            FilterChips(size = 5,{
-                //snackbarHostState.currentSnackbarData?.dismiss()
-                vm.resetError()
-            })
+val click =  remember {{
+            //snackbarHostState.currentSnackbarData?.dismiss()
+            vm.resetError()
+        }}
+            FilterChips(size = 5,click)
 
             BoxItem(size = 5)
 
-        }
+          ///  val flow = remember { vm.getImage() }
+            LifecycleEventEffect(Lifecycle.Event.ON_START) {
+                vm.getImage("https://images.dog.ceo/breeds/shihtzu/n02086240_1366.jpg")
+            }
 
+            val img  = vm.imgUrl.collectAsStateWithLifecycle()
+            AsyncImage(
+                model = img.value,
+                placeholder = painterResource(R.drawable.park1),
+                contentDescription = null
+            )
+        }
     }
 }
 
