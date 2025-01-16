@@ -85,7 +85,9 @@ fun LoginScreen(launcher : (screen : Screen) -> Unit) {
 
         TgPrimaryButton(
             text = "Login",
-            onClick = { /*TODO*/ }
+            onClick = {
+                launcher.invoke(Screen.Home)
+            }
         )
 
         TgOutlinedImageButton(text = "Login with google" ,

@@ -55,6 +55,8 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
 
             FilterChips(size = 5)
 
+            BoxRow(size = 5)
+
         }
 
     }
