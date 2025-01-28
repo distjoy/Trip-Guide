@@ -1,32 +1,44 @@
 package com.tunieapps.tripguide.ui.screens.home
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.text.appendInlineContent
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.PlaceholderVerticalAlign
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import coil3.compose.AsyncImage
 import com.tunieapps.tripguide.R
+import com.tunieapps.tripguide.ui.theme.TripGuideTheme
 import com.tunieapps.tripguide.ui.theme.bodyHeading
 import com.tunieapps.tripguide.ui.theme.subTitle
+import com.tunieapps.tripguide.ui.theme.white
 
 @Composable
 fun BoxRow(size: Int) {
@@ -35,68 +47,133 @@ fun BoxRow(size: Int) {
             Box(
                 modifier = Modifier
                     .padding(start = 5.dp, end = 10.dp)
-                    .clip( shape = RoundedCornerShape(40.dp))
-                   // .background(color = Color(0xBCE7E3E3))
+                    .size(161.dp, 206.dp)
             ) {
                 AsyncImage(
                     model = R.drawable.park1,
                     contentDescription = "box image",
+                    contentScale = ContentScale.FillHeight,
                     modifier = Modifier
-                        .size(width = 161.dp, height = 206.dp)
-
-                        //.background(color = Color.Transparent,)
+                        .height(206.dp)
+                        .clip(shape = RoundedCornerShape(10.dp))
                 )
                 Column(
-                    modifier = Modifier.align(alignment = Alignment.BottomCenter)
+                    modifier = Modifier
+                        .align(alignment = Alignment.BottomCenter)
+
+                        .padding(5.dp)
+                        .fillMaxWidth()
+                        .clip(shape = RoundedCornerShape(10.dp))
+                        .background(color = white)
+                        .padding(5.dp)
+
                 ) {
                     Text(
                         "Milano Park",
-                        style = bodyHeading
+                        style = bodyHeading,
+                        modifier = Modifier.padding(end = 10.dp, bottom = 5.dp)
                     )
-                    Text(
-                        "Saint Paulo, Milan, Italy",
-                        style = subTitle
-                    )
-
+                    AddressText()
                     Row {
-                        val myId = "inlineContent"
-                        val text = buildAnnotatedString {
-                            append("Hello")     // Append a placeholder string "[myBox]" and attach an annotation "inlineContent" on it.
-                            appendInlineContent(myId, "[myBox]")
-                        }
-                        val inlineContent = mapOf(
-                            Pair(         // This tells the [BasicText] to replace the placeholder string "[myBox]" by         // the composable given in the [InlineTextContent] object.
-                                myId,
-                                InlineTextContent(             // Placeholder tells text layout the expected size and vertical alignment of             // children composable.
-                                    Placeholder(
-                                        width = 0.5.em,
-                                        height = 0.5.em,
-                                        placeholderVerticalAlign = PlaceholderVerticalAlign.AboveBaseline
-                                    )
-                                )
-                                {             // This [Box] will fill maximum size, which is specified by the [Placeholder]             // above. Notice the width and height in [Placeholder] are specified in TextUnit,             // and are converted into pixel by text layout.
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxSize()
-                                            .background(color = Color.Red)
-                                    )
-                                })
-                        )
-                        Text(
-                            text = "4.0",
-                            style = subTitle
-                        )
+                        StarText()
                         Text(
                             "|",
-                            style = subTitle
+                            style = subTitle,
+                            modifier = Modifier.padding(end = 2.dp),
+                            fontWeight = FontWeight.Medium
                         )
                         Text(
                             "36 Reviews",
-                            style = subTitle
+                            style = subTitle,
+                            fontWeight = FontWeight.Medium
                         )
                     }
                 }
             }
         }
+    }
+}
+
+@Composable
+fun StarText() {
+    val myId = "ratingStar"
+    val text = buildAnnotatedString {
+        appendInlineContent(myId, "[star]")
+        append("4.0")
+    }
+    val inlineContent = mapOf(
+        Pair(
+            myId,
+            InlineTextContent(
+                Placeholder(
+                    width = 1.2.em,
+                    height = 1.2.em,
+                    placeholderVerticalAlign = PlaceholderVerticalAlign.Center
+                )
+            )
+            {
+                Image(
+                    painter = painterResource(R.drawable.star),
+                    "",
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(end = 2.dp)
+                        .background(color = Color.Transparent)
+                )
+            })
+    )
+    Text(
+        text = text,
+        inlineContent = inlineContent,
+        style = subTitle,
+        fontWeight = FontWeight.Medium,
+        modifier = Modifier.padding(end = 2.dp)
+    )
+}
+
+
+@Composable
+fun AddressText() {
+    val myId = "addressIcon"
+    val text = buildAnnotatedString {
+        appendInlineContent(myId, "[address]")
+        append("Saint Paulo, Milan, Italy")
+    }
+    val inlineContent = mapOf(
+        Pair(
+            myId,
+            InlineTextContent(
+                Placeholder(
+                    width = 1.2.em,
+                    height = 1.2.em,
+                    placeholderVerticalAlign = PlaceholderVerticalAlign.Center
+                )
+            )
+            {
+                Image(
+                    painter = painterResource(R.drawable.location),
+                    "",
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(end = 2.dp)
+                        .background(color = Color.Transparent)
+                )
+            })
+    )
+    Text(
+        text = text,
+        inlineContent = inlineContent,
+        style = subTitle,
+        fontWeight = FontWeight.Medium,
+        modifier = Modifier.padding(bottom = 3.dp)
+    )
+
+}
+
+@Composable
+@Preview(showBackground = true)
+fun BoxRowPreview(){
+    TripGuideTheme {
+        BoxRow(5)
     }
 }
