@@ -42,7 +42,7 @@ import com.tunieapps.tripguide.ui.theme.white
 
 @Composable
 fun BoxRow(size: Int) {
-    LazyRow {
+    LazyRow(modifier = Modifier.padding(top = 20.dp)) {
         items(count = size) {
             Box(
                 modifier = Modifier
@@ -50,7 +50,7 @@ fun BoxRow(size: Int) {
                     .size(161.dp, 206.dp)
             ) {
                 AsyncImage(
-                    model = R.drawable.park1,
+                    model = R.drawable.park1,//"https://picsum.photos/200",//,
                     contentDescription = "box image",
                     contentScale = ContentScale.FillHeight,
                     modifier = Modifier
@@ -60,7 +60,6 @@ fun BoxRow(size: Int) {
                 Column(
                     modifier = Modifier
                         .align(alignment = Alignment.BottomCenter)
-
                         .padding(5.dp)
                         .fillMaxWidth()
                         .clip(shape = RoundedCornerShape(10.dp))

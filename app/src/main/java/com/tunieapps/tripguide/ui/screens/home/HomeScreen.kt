@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import com.tunieapps.tripguide.DMSansFamily
 import com.tunieapps.tripguide.R
 import com.tunieapps.tripguide.ui.Screen
+import com.tunieapps.tripguide.ui.SearchInputField
 import com.tunieapps.tripguide.ui.TgFilledTextField
 import com.tunieapps.tripguide.ui.TgOutlinedTextField
 import com.tunieapps.tripguide.ui.theme.TripGuideTheme
@@ -50,13 +51,12 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
             SearchBar()
             Text(
                 "Discover Places",
+                modifier = Modifier.padding(top = 20.dp, bottom = 10.dp),
                 style = heading3
             )
 
             FilterChips(size = 5)
-
             BoxRow(size = 5)
-
         }
 
     }
@@ -65,7 +65,7 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
 
 @Composable
 fun SearchBar(){
-    TgFilledTextField(
+    SearchInputField(
         textVal = "Full Name",
         onValueChange = {
 
