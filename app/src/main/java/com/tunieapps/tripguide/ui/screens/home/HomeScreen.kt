@@ -112,7 +112,7 @@ fun SearchBar(){
 fun TopBar(){
     //TopAppBar(contentPadding = AppBarDefaults.ContentPadding, backgroundColor = Color.White){
         Row(          modifier = Modifier
-            .padding( top = 0.dp, bottom = 20.dp)) {
+            .padding( top = 20.dp, bottom = 20.dp,start = 10.dp, end = 10.dp)) {
             Column(
                 modifier = Modifier
                     .weight(1f, true)
