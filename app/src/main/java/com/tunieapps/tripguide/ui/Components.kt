@@ -8,13 +8,16 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -50,15 +53,21 @@ import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.Placeholder
+import androidx.compose.ui.text.PlaceholderVerticalAlign
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.tunieapps.tripguide.DMSansFamily
+import com.tunieapps.tripguide.R
 
 
 @Composable
@@ -152,9 +161,9 @@ fun SearchInputField( textVal : String,onValueChange : (String) -> Unit,
         modifier = Modifier
             .fillMaxWidth()
             .padding(PaddingValues( vertical =  10.dp))
-
-            .shadow(5.dp, RoundedCornerShape(CornerSize(35.dp)), ambientColor = Color(0xFFFFFFFF),
-                spotColor = Color(0xFFEAEAEA) )
+            .shadow(10.dp, RoundedCornerShape(CornerSize(35.dp)), ambientColor = Color(0xFFFFFFFF),
+                spotColor = Color(0xFFB7B7B7)
+            )
             .background(color = Color(0xFFFFFFFF) ),
         textStyle = TextStyle(
             fontSize = 15.sp,
@@ -261,4 +270,35 @@ fun TgOutlinedImageButton(text: String, drawableId: Int, onClick: () -> Unit) {
                 .padding(start = 10.dp)
         )
     }
+}
+
+@Composable
+fun textAndInlineContent(text: String):Pair<AnnotatedString,  Map<String, InlineTextContent>>{
+    val myId = "addressIcon"
+    val text = buildAnnotatedString {
+        appendInlineContent(myId, "[address]")
+        append("Saint Paulo, Milan, Italy")
+    }
+    val inlineContent = mapOf(
+        Pair(
+            myId,
+            InlineTextContent(
+                Placeholder(
+                    width = 1.2.em,
+                    height = 1.2.em,
+                    placeholderVerticalAlign = PlaceholderVerticalAlign.Center
+                )
+            )
+            {
+                Image(
+                    painter = painterResource(R.drawable.location),
+                    "",
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(end = 2.dp)
+                        .background(color = Color.Transparent)
+                )
+            })
+    )
+    return Pair(text,inlineContent)
 }

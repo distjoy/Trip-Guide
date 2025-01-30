@@ -4,10 +4,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -32,6 +35,7 @@ import com.tunieapps.tripguide.ui.Screen
 import com.tunieapps.tripguide.ui.SearchInputField
 import com.tunieapps.tripguide.ui.TgFilledTextField
 import com.tunieapps.tripguide.ui.TgOutlinedTextField
+import com.tunieapps.tripguide.ui.textAndInlineContent
 import com.tunieapps.tripguide.ui.theme.TripGuideTheme
 import com.tunieapps.tripguide.ui.theme.bodyText
 import com.tunieapps.tripguide.ui.theme.heading1
@@ -41,11 +45,14 @@ import com.tunieapps.tripguide.ui.theme.heading3
 @Composable
 fun HomeScreen(launcher: (screen : Screen) -> Unit){
     Scaffold(
-        topBar = { TopBar() },
+        modifier = Modifier.safeDrawingPadding(),
+        topBar = { TopBar()
+             },
         bottomBar = {},
-        containerColor = Color(0xFFFAF9F9)
+        containerColor = Color(0xFFFAF9F9),
+        contentWindowInsets = WindowInsets(0.dp)
     ) { padding ->
-        Column(modifier = Modifier.padding(top = padding.calculateTopPadding(),
+        Column(modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding(),
             start = padding.calculateStartPadding(LayoutDirection.Ltr)+10.dp,
             end = padding.calculateEndPadding(LayoutDirection.Ltr)+10.dp, )) {
             SearchBar()
@@ -104,36 +111,42 @@ fun SearchBar(){
 @Composable
 fun TopBar(){
     //TopAppBar(contentPadding = AppBarDefaults.ContentPadding, backgroundColor = Color.White){
-        Row {
+        Row(          modifier = Modifier
+            .padding( top = 0.dp, bottom = 20.dp)) {
             Column(
                 modifier = Modifier
                     .weight(1f, true)
                     .align(Alignment.CenterVertically)
             ) {
                 Text(
-                    "Howday Alex", fontSize = 16.sp,
+                    "Howday \uD83D\uDC4B Alex", fontSize = 20.sp,
                     fontFamily = DMSansFamily,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .align(alignment = Alignment.Start)
                         .padding(start = 10.dp)
                 )
+                val pair = textAndInlineContent("Sant Paulo, Milan, Italy")
                 Text(
-                    "Sant Paulo, Milan, Italy", fontSize = 14.sp,
+                    text = pair.first,
+                    inlineContent = pair.second,
+                    fontSize = 14.sp,
+                    color = Color(0xFFDE7254),
                     fontFamily = DMSansFamily,
-                    fontWeight = FontWeight.Normal,
+                    fontWeight = FontWeight.Medium,
                     modifier = Modifier
                         .align(alignment = Alignment.Start)
-                        .padding(start = 10.dp)
+                        .padding(start = 10.dp, top = 8.dp)
                 )
             }
             Image(
                 painter = painterResource(id = R.mipmap.memoji), contentDescription = "google logo",
                 modifier = Modifier
-                    .width(66.dp)
-                    .height(66.dp)
-                    .align(Alignment.CenterVertically)
                     .padding(vertical = 5.dp, horizontal = 10.dp)
+                    .width(56.dp)
+                    .height(56.dp)
+                    .align(Alignment.CenterVertically)
+
             )
         }
     //}

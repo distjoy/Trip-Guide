@@ -50,7 +50,7 @@ fun BoxRow(size: Int) {
                     .size(161.dp, 206.dp)
             ) {
                 AsyncImage(
-                    model = R.drawable.park1,//"https://picsum.photos/200",//,
+                    model = "R.drawable.park1",//"https://picsum.photos/200",//,
                     contentDescription = "box image",
                     contentScale = ContentScale.FillHeight,
                     modifier = Modifier
