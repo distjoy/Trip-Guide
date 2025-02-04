@@ -78,14 +78,14 @@ val bodyTextLight = TextStyle(
     color = Color(0xFFFAF9F9)
 )
 val subTitle = TextStyle(
-    fontSize = 10.sp,
+    fontSize = 12.sp,
     fontFamily = DMSansFamily,
     fontWeight = FontWeight.Medium,
     textAlign = TextAlign.Left,
     color = Color(0xFF828F9C)
 )
 val subTitleDark = TextStyle(
-    fontSize = 10.sp,
+    fontSize = 12.sp,
     fontFamily = DMSansFamily,
     fontWeight = FontWeight.Medium,
     textAlign = TextAlign.Left,

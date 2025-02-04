@@ -45,11 +45,13 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.ClipOp
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.graphics.takeOrElse
+import androidx.compose.ui.graphics.vector.DefaultTintBlendMode
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.semantics
@@ -157,7 +159,7 @@ fun SearchInputField( textVal : String,onValueChange : (String) -> Unit,
     OutlinedTextField(
         enabled = true,
         value = value,
-        label = {Text(text = textVal)},
+        placeholder = {Text(text = "Start searching here...")},
         modifier = Modifier
             .fillMaxWidth()
             .padding(PaddingValues( vertical =  10.dp))
@@ -273,11 +275,11 @@ fun TgOutlinedImageButton(text: String, drawableId: Int, onClick: () -> Unit) {
 }
 
 @Composable
-fun textAndInlineContent(text: String):Pair<AnnotatedString,  Map<String, InlineTextContent>>{
+fun textAndInlineContent(text: String, color: Color?=null):Pair<AnnotatedString,  Map<String, InlineTextContent>>{
     val myId = "addressIcon"
     val text = buildAnnotatedString {
         appendInlineContent(myId, "[address]")
-        append("Saint Paulo, Milan, Italy")
+        append(text)
     }
     val inlineContent = mapOf(
         Pair(
@@ -291,8 +293,9 @@ fun textAndInlineContent(text: String):Pair<AnnotatedString,  Map<String, Inline
             )
             {
                 Image(
-                    painter = painterResource(R.drawable.location),
-                    "",
+                    painter = painterResource(R.drawable.location3),
+                    contentDescription = "",
+                    colorFilter = if(color!=null)ColorFilter.tint(color) else null,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(end = 2.dp)

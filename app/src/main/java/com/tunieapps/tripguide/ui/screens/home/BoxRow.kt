@@ -47,13 +47,14 @@ fun BoxRow(size: Int) {
             Box(
                 modifier = Modifier
                     .padding(start = 5.dp, end = 10.dp)
-                    .size(161.dp, 206.dp)
+                    .height(206.dp)
             ) {
                 AsyncImage(
                     model = R.drawable.park1,//"https://picsum.photos/200",//,
                     contentDescription = "box image",
-                    contentScale = ContentScale.FillHeight,
+                    contentScale = ContentScale.FillBounds,
                     modifier = Modifier
+                        .width(161.dp)
                         .height(206.dp)
                         .clip(shape = RoundedCornerShape(10.dp))
                 )

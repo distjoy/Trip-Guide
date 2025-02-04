@@ -2,18 +2,29 @@ package com.tunieapps.tripguide.ui.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.BottomNavigation
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 
@@ -21,14 +32,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 import com.tunieapps.tripguide.DMSansFamily
 import com.tunieapps.tripguide.R
 import com.tunieapps.tripguide.ui.Screen
@@ -37,22 +53,73 @@ import com.tunieapps.tripguide.ui.TgFilledTextField
 import com.tunieapps.tripguide.ui.TgOutlinedTextField
 import com.tunieapps.tripguide.ui.textAndInlineContent
 import com.tunieapps.tripguide.ui.theme.TripGuideTheme
+import com.tunieapps.tripguide.ui.theme.bodyHeading
 import com.tunieapps.tripguide.ui.theme.bodyText
 import com.tunieapps.tripguide.ui.theme.heading1
 import com.tunieapps.tripguide.ui.theme.heading3
+import com.tunieapps.tripguide.ui.theme.subTitle
+import com.tunieapps.tripguide.ui.theme.white
 
+
+data class AppNavItem(val id: Int,val defaultIcon: Int,val  selectedIcon: Int,var isSelected: Boolean = false)
 
 @Composable
 fun HomeScreen(launcher: (screen : Screen) -> Unit){
+    val menu = listOf(AppNavItem(1,R.drawable.home_line,R.drawable.home_filled,true),
+     AppNavItem(1,R.drawable.heart_line,R.drawable.heart_line,true),
+    AppNavItem(1,R.drawable.notification_line,R.drawable.notification_line,true),
+    AppNavItem(1,R.drawable.profile_line,R.drawable.profile_line,true))
     Scaffold(
-        modifier = Modifier.safeDrawingPadding(),
-        topBar = { TopBar()
-             },
-        bottomBar = {},
+        modifier = Modifier
+            .background(color = Color(0xFFFAF9F9))
+            .safeDrawingPadding(),
+        topBar = { TopBar() },
+        bottomBar = {
+            NavigationBar(modifier = Modifier
+                .padding(top = 0.dp, bottom = 0.dp).background(color = Color(0xFFFAF9F9))
+                .shadow(35.dp, RoundedCornerShape(
+                CornerSize(0.dp)
+            ), ambientColor = Color(0xFF2A2A2A),
+                spotColor = Color(0xFF2A2A2A)
+            ),
+                containerColor = Color(0xFFFAF9F9),
+                contentColor = Color(0xFFDE7254),
+                tonalElevation = 2.dp) {
+
+                menu.forEach({
+
+                  val icon =   if(it.isSelected){
+                        it.selectedIcon
+                    } else it.defaultIcon
+
+                    NavigationBarItem(
+                        selected = false,
+                        onClick = { launcher(Screen.Home) },
+                        icon = {
+                            Image(
+                                painter = painterResource(id = icon),
+                                contentDescription = "Discover places banner",
+                                Modifier
+                                    .height(24.dp)
+                                    .width(24.dp),
+                                colorFilter = ColorFilter.tint(Color(0xFFDE7254))
+                            )
+                        },
+                        enabled = true,
+                        alwaysShowLabel = false,
+                        modifier = Modifier
+
+                    )
+
+                })
+            }
+
+        },
         containerColor = Color(0xFFFAF9F9),
         contentWindowInsets = WindowInsets(0.dp)
     ) { padding ->
-        Column(modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding(),
+        val scrollState = rememberScrollState()
+        Column(modifier = Modifier.verticalScroll(scrollState).fillMaxSize().padding(top = padding.calculateTopPadding(),
             start = padding.calculateStartPadding(LayoutDirection.Ltr)+10.dp,
             end = padding.calculateEndPadding(LayoutDirection.Ltr)+10.dp, )) {
             SearchBar()
@@ -64,6 +131,97 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
 
             FilterChips(size = 5)
             BoxRow(size = 5)
+            Text(
+                "People Liked",
+                modifier = Modifier.padding(top = 30.dp, bottom = 15.dp),
+                style = heading3
+            )
+
+            Column {
+
+                   Row(
+                           modifier = Modifier
+                               .padding(start = 5.dp, end = 10.dp,bottom = 10.dp)
+                               .height(68.dp)
+                       ) {
+                           AsyncImage(
+                               model = R.mipmap.cafe,//"https://picsum.photos/200",//,
+                               contentDescription = "box image",
+                               contentScale = ContentScale.FillHeight,
+                               modifier = Modifier
+                                   .width(68.dp)
+                                   .clip(shape = RoundedCornerShape(10.dp))
+                           )
+                           Column(
+                               modifier = Modifier
+                                   .padding(5.dp)
+
+                           ) {
+                               Text(
+                                   "Milano Cafe",
+                                   style = bodyHeading,
+                                   modifier = Modifier.padding(end = 10.dp, bottom = 5.dp)
+                               )
+                               AddressText()
+                               Row {
+                                   StarText()
+                                   Text(
+                                       "|",
+                                       style = subTitle,
+                                       modifier = Modifier.padding(end = 2.dp),
+                                       fontWeight = FontWeight.Medium
+                                   )
+                                   Text(
+                                       "36 Reviews",
+                                       style = subTitle,
+                                       fontWeight = FontWeight.Medium
+                                   )
+                               }
+                           }
+                       }
+
+                Row(
+                    modifier = Modifier
+                        .padding(top = 10.dp, start = 5.dp, end = 10.dp)
+                        .height(68.dp)
+                ) {
+                    AsyncImage(
+                        model = R.mipmap.cafe,//"https://picsum.photos/200",//,
+                        contentDescription = "box image",
+                        contentScale = ContentScale.FillHeight,
+                        modifier = Modifier
+                            .width(68.dp)
+                            .clip(shape = RoundedCornerShape(10.dp))
+                    )
+                    Column(
+                        modifier = Modifier
+                            .padding(5.dp)
+
+                    ) {
+                        Text(
+                            "Milano Cafe",
+                            style = bodyHeading,
+                            modifier = Modifier.padding(end = 10.dp, bottom = 5.dp)
+                        )
+                        AddressText()
+                        Row {
+                            StarText()
+                            Text(
+                                "|",
+                                style = subTitle,
+                                modifier = Modifier.padding(end = 2.dp),
+                                fontWeight = FontWeight.Medium
+                            )
+                            Text(
+                                "36 Reviews",
+                                style = subTitle,
+                                fontWeight = FontWeight.Medium
+                            )
+                        }
+                    }
+                }
+            }
+
         }
 
     }
@@ -126,7 +284,7 @@ fun TopBar(){
                         .align(alignment = Alignment.Start)
                         .padding(start = 10.dp)
                 )
-                val pair = textAndInlineContent("Sant Paulo, Milan, Italy")
+                val pair = textAndInlineContent("Sant Paulo, Milan, Italy",Color(0xFFDE7254))
                 Text(
                     text = pair.first,
                     inlineContent = pair.second,
