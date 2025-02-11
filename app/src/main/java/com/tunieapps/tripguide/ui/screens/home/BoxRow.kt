@@ -38,6 +38,7 @@ import com.tunieapps.tripguide.R
 import com.tunieapps.tripguide.ui.theme.TripGuideTheme
 import com.tunieapps.tripguide.ui.theme.bodyHeading
 import com.tunieapps.tripguide.ui.theme.subTitle
+import com.tunieapps.tripguide.ui.theme.subTitleDark
 import com.tunieapps.tripguide.ui.theme.white
 
 @Composable
@@ -46,7 +47,7 @@ fun BoxRow(size: Int) {
         items(count = size) {
             Box(
                 modifier = Modifier
-                    .padding(start = 5.dp, end = 10.dp)
+                    .padding(start = 24.dp, end = 0.dp)
                     .height(206.dp)
             ) {
                 AsyncImage(
@@ -62,7 +63,6 @@ fun BoxRow(size: Int) {
                     modifier = Modifier
                         .align(alignment = Alignment.BottomCenter)
                         .padding(5.dp)
-                        .fillMaxWidth()
                         .clip(shape = RoundedCornerShape(10.dp))
                         .background(color = white)
                         .padding(5.dp)
@@ -92,6 +92,24 @@ fun BoxRow(size: Int) {
             }
         }
     }
+}
+
+@Composable
+fun PriceTag() {
+   Row {
+       Text(
+           text = "$40.0",
+           style = subTitleDark,
+           fontWeight = FontWeight.SemiBold
+       )
+       Text(
+           "/night",
+           style = subTitle,
+           fontWeight = FontWeight.Medium
+       )
+   }
+
+
 }
 
 @Composable
@@ -127,10 +145,9 @@ fun StarText() {
         inlineContent = inlineContent,
         style = subTitle,
         fontWeight = FontWeight.Medium,
-        modifier = Modifier.padding(end = 2.dp)
+        modifier = Modifier.padding(end = 4.dp)
     )
 }
-
 
 @Composable
 fun AddressText() {
@@ -165,7 +182,7 @@ fun AddressText() {
         inlineContent = inlineContent,
         style = subTitle,
         fontWeight = FontWeight.Medium,
-        modifier = Modifier.padding(bottom = 3.dp)
+        modifier = Modifier.padding(bottom = 10.dp)
     )
 
 }

@@ -35,7 +35,7 @@ fun FilterChips(size: Int) {
         items(count = size) {
             FilterChip(
                 modifier = Modifier
-                    .padding(paddingValues = PaddingValues(end = 20.dp))
+                    .padding(paddingValues = PaddingValues(start = 27.dp, end = 0.dp))
 
                 ,
                 onClick = { },

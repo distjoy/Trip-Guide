@@ -78,7 +78,7 @@ val bodyTextLight = TextStyle(
     color = Color(0xFFFAF9F9)
 )
 val subTitle = TextStyle(
-    fontSize = 12.sp,
+    fontSize = 13.sp,
     fontFamily = DMSansFamily,
     fontWeight = FontWeight.Medium,
     textAlign = TextAlign.Left,
@@ -114,7 +114,7 @@ val heading3 = TextStyle(
     textAlign = TextAlign.Left
 )
 val bodyHeading = TextStyle(
-    fontSize = 14.sp,
+    fontSize = 16.sp,
     fontFamily = DMSansFamily,
     fontWeight = FontWeight.Bold,
     textAlign = TextAlign.Left,

@@ -153,14 +153,14 @@ fun TgFilledTextField( textVal : String,onValueChange : (String) -> Unit,
 }
 
 @Composable
-fun SearchInputField( textVal : String,onValueChange : (String) -> Unit,
+fun SearchInputField( modifier : Modifier = Modifier,textVal : String,onValueChange : (String) -> Unit,
                        startIcon :  @Composable() (() -> Unit)? = null,endIcon :  @Composable() (() -> Unit)? = null){
     var value by remember { mutableStateOf("") }
     OutlinedTextField(
         enabled = true,
         value = value,
         placeholder = {Text(text = "Start searching here...")},
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(PaddingValues( vertical =  10.dp))
             .shadow(10.dp, RoundedCornerShape(CornerSize(35.dp)), ambientColor = Color(0xFFFFFFFF),

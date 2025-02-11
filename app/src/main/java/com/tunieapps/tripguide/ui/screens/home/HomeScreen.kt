@@ -13,11 +13,15 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
@@ -51,6 +55,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -76,8 +81,6 @@ import com.tunieapps.tripguide.ui.theme.white
 import kotlin.math.abs
 
 
-data class AppNavItem(val id: Int,val defaultIcon: Int,val  selectedIcon: Int,var isSelected: Boolean = false)
-
 @Composable
 fun HomeScreen(launcher: (screen : Screen) -> Unit){
     val menu = listOf(AppNavItem(1,R.drawable.home_line,R.drawable.home_filled,true),
@@ -87,13 +90,22 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
     val scrollState = rememberScrollState()
     val pair = remember { mutableStateOf(Pair(0,0)) }
     val originalPos = remember {mutableStateOf(Pair(-1,-1)) }
+    val st = with(LocalDensity. current) { WindowInsets.statusBars.getBottom(this) + 20.dp. roundToPx().toFloat() }
+
     val nestedScrollConnection =  remember {
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
 
-                val new = abs( pair.value.second+available.y.toInt())
-                if(originalPos.value.second >= new )
-                    pair.value = Pair(0, pair.value.second+available.y.toInt())
+                val new = pair.value.second+available.y.toInt()
+
+                if(new <=0){
+                    if((originalPos.value.second-st) >= abs(new) ) {
+                        pair.value = Pair(0, pair.value.second + available.y.toInt())
+
+                    }
+
+                }
+
                 return Offset.Zero
             }
         }
@@ -160,13 +172,13 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
             .padding(
                 top = padding.calculateTopPadding(),
                 bottom = 100.dp,
-                start = padding.calculateStartPadding(LayoutDirection.Ltr) + 10.dp,
-                end = padding.calculateEndPadding(LayoutDirection.Ltr) + 10.dp,
+                start = padding.calculateStartPadding(LayoutDirection.Ltr) ,
+                end = padding.calculateEndPadding(LayoutDirection.Ltr) ,
             )) {
 
             Text(
                 "Discover Places",
-                modifier = Modifier.padding(top = 20.dp, bottom = 10.dp),
+                modifier = Modifier.padding(start = 27.dp, top = 20.dp, bottom = 10.dp),
                 style = heading3
             )
 
@@ -174,91 +186,119 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
             BoxRow(size = 5)
             Text(
                 "People Liked",
-                modifier = Modifier.padding(top = 30.dp, bottom = 15.dp),
+                modifier = Modifier.padding(start = 24.dp, top = 30.dp, bottom = 15.dp),
                 style = heading3
             )
 
-            Column {
+            Column(modifier = Modifier.padding(start = 24.dp)) {
 
-                   Row(
-                           modifier = Modifier
-                               .padding(start = 5.dp, end = 10.dp, bottom = 10.dp)
-                               .height(68.dp)
-                       ) {
-                           AsyncImage(
-                               model = R.mipmap.cafe,//"https://picsum.photos/200",//,
-                               contentDescription = "box image",
-                               contentScale = ContentScale.FillHeight,
-                               modifier = Modifier
-                                   .width(68.dp)
-                                   .clip(shape = RoundedCornerShape(10.dp))
-                           )
-                           Column(
-                               modifier = Modifier
-                                   .padding(5.dp)
+                    Row(
+                        modifier = Modifier
+                            .padding(start = 0.dp, end = 10.dp, bottom = 15.dp)
+                            .wrapContentHeight()
+                    ) {
+                        AsyncImage(
+                            model = R.mipmap.cafe,//"https://picsum.photos/200",//,
+                            contentDescription = "box image",
+                            contentScale = ContentScale.FillHeight,
+                            modifier = Modifier
+                                .height(78.dp)
+                                .width(78.dp)
+                                .clip(shape = RoundedCornerShape(15.dp))
+                        )
 
-                           ) {
-                               Text(
-                                   "Milano Cafe",
-                                   style = bodyHeading,
-                                   modifier = Modifier.padding(end = 10.dp, bottom = 5.dp)
-                               )
-                               AddressText()
-                               Row {
-                                   StarText()
-                                   Text(
-                                       "|",
-                                       style = subTitle,
-                                       modifier = Modifier.padding(end = 2.dp),
-                                       fontWeight = FontWeight.Medium
-                                   )
-                                   Text(
-                                       "36 Reviews",
-                                       style = subTitle,
-                                       fontWeight = FontWeight.Medium
-                                   )
-                               }
-                           }
-                       }
+                        Column(
+                            modifier = Modifier
+                                .padding(5.dp)
+                                .wrapContentHeight()
+                        ) {
+                            Text(
+                                "Milano Cafe",
+                                style = bodyHeading,
+                                modifier = Modifier.padding(end = 10.dp)
+                            )
+                            AddressText()
+                            Row( modifier = Modifier.padding(end = 10.dp)) {
+                                StarText()
+                                Text(
+                                    "|",
+                                    style = subTitle,
+                                    modifier = Modifier.padding(end = 4.dp),
+                                    fontWeight = FontWeight.Medium
+                                )
+                                Text(
+                                    "36 Reviews",
+                                    style = subTitle,
+                                    modifier = Modifier.padding(end = 4.dp),
+                                    fontWeight = FontWeight.Medium
+                                )
+                                Text(
+                                    "|",
+                                    style = subTitle,
+                                    modifier = Modifier.padding(end = 4.dp),
+                                    fontWeight = FontWeight.Medium
+                                )
+                                PriceTag()
+                            }
+                        }
+                        IconButton(onClick = {
+
+                        },modifier = Modifier
+                            .fillMaxHeight()
+                            .background(Color.White, shape = RoundedCornerShape(10.dp))) {
+                            Image(painter =
+                            painterResource(  R.drawable.arrow_right_angle),"")
+                        }
+                    }
+
 
                 Row(
                     modifier = Modifier
-                        .padding(top = 10.dp, start = 5.dp, end = 10.dp)
-                        .height(68.dp)
+                        .padding(start = 0.dp, end = 10.dp, bottom = 15.dp)
+                        .wrapContentHeight()
                 ) {
                     AsyncImage(
                         model = R.mipmap.cafe,//"https://picsum.photos/200",//,
                         contentDescription = "box image",
                         contentScale = ContentScale.FillHeight,
                         modifier = Modifier
-                            .width(68.dp)
-                            .clip(shape = RoundedCornerShape(10.dp))
+                            .height(78.dp)
+                            .width(78.dp)
+                            .clip(shape = RoundedCornerShape(15.dp))
                     )
+
                     Column(
                         modifier = Modifier
-                            .weight(1f, fill = true)
                             .padding(5.dp)
-
+                            .wrapContentHeight()
                     ) {
                         Text(
                             "Milano Cafe",
                             style = bodyHeading,
-                            modifier = Modifier.padding(end = 10.dp, bottom = 5.dp)
+                            modifier = Modifier.padding(end = 10.dp)
                         )
                         AddressText()
-                        Row {
+                        Row( modifier = Modifier.padding(end = 10.dp)) {
                             StarText()
                             Text(
                                 "|",
                                 style = subTitle,
-                                modifier = Modifier.padding(end = 2.dp),
+                                modifier = Modifier.padding(end = 4.dp),
                                 fontWeight = FontWeight.Medium
                             )
                             Text(
                                 "36 Reviews",
                                 style = subTitle,
+                                modifier = Modifier.padding(end = 4.dp),
                                 fontWeight = FontWeight.Medium
                             )
+                            Text(
+                                "|",
+                                style = subTitle,
+                                modifier = Modifier.padding(end = 4.dp),
+                                fontWeight = FontWeight.Medium
+                            )
+                            PriceTag()
                         }
                     }
                     IconButton(onClick = {
@@ -270,87 +310,67 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
                         painterResource(  R.drawable.arrow_right_angle),"")
                     }
                 }
+
                 Row(
                     modifier = Modifier
-                        .padding(start = 5.dp, end = 10.dp, bottom = 10.dp)
-                        .height(68.dp)
+                        .padding(start = 0.dp, end = 10.dp, bottom = 15.dp)
+                        .wrapContentHeight()
                 ) {
                     AsyncImage(
                         model = R.mipmap.cafe,//"https://picsum.photos/200",//,
                         contentDescription = "box image",
                         contentScale = ContentScale.FillHeight,
                         modifier = Modifier
-                            .width(68.dp)
-                            .clip(shape = RoundedCornerShape(10.dp))
+                            .height(78.dp)
+                            .width(78.dp)
+                            .clip(shape = RoundedCornerShape(15.dp))
                     )
+
                     Column(
                         modifier = Modifier
                             .padding(5.dp)
-
+                            .wrapContentHeight()
                     ) {
                         Text(
                             "Milano Cafe",
                             style = bodyHeading,
-                            modifier = Modifier.padding(end = 10.dp, bottom = 5.dp)
+                            modifier = Modifier.padding(end = 10.dp)
                         )
                         AddressText()
-                        Row {
+                        Row( modifier = Modifier.padding(end = 10.dp)) {
                             StarText()
                             Text(
                                 "|",
                                 style = subTitle,
-                                modifier = Modifier.padding(end = 2.dp),
+                                modifier = Modifier.padding(end = 4.dp),
                                 fontWeight = FontWeight.Medium
                             )
                             Text(
                                 "36 Reviews",
                                 style = subTitle,
+                                modifier = Modifier.padding(end = 4.dp),
                                 fontWeight = FontWeight.Medium
                             )
-                        }
-                    }
-                }
-
-                Row(
-                    modifier = Modifier
-                        .padding(top = 10.dp, start = 5.dp, end = 10.dp)
-                        .height(68.dp)
-                ) {
-                    AsyncImage(
-                        model = R.mipmap.cafe,//"https://picsum.photos/200",//,
-                        contentDescription = "box image",
-                        contentScale = ContentScale.FillHeight,
-                        modifier = Modifier
-                            .width(68.dp)
-                            .clip(shape = RoundedCornerShape(10.dp))
-                    )
-                    Column(
-                        modifier = Modifier
-                            .padding(5.dp)
-
-                    ) {
-                        Text(
-                            "Milano Cafe",
-                            style = bodyHeading,
-                            modifier = Modifier.padding(end = 10.dp, bottom = 5.dp)
-                        )
-                        AddressText()
-                        Row {
-                            StarText()
                             Text(
                                 "|",
                                 style = subTitle,
-                                modifier = Modifier.padding(end = 2.dp),
+                                modifier = Modifier.padding(end = 4.dp),
                                 fontWeight = FontWeight.Medium
                             )
-                            Text(
-                                "36 Reviews",
-                                style = subTitle,
-                                fontWeight = FontWeight.Medium
-                            )
+                            PriceTag()
                         }
                     }
+                    IconButton(onClick = {
+
+                    },modifier = Modifier
+                        .fillMaxHeight()
+                        .background(Color.White, shape = RoundedCornerShape(10.dp))) {
+                        Image(painter =
+                        painterResource(  R.drawable.arrow_right_angle),"")
+                    }
                 }
+
+
             }
 
         }
@@ -362,6 +382,8 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
 @Composable
 fun SearchBar(){
     SearchInputField(
+        modifier = Modifier
+            .padding(start = 22.dp, end = 22.dp),
         textVal = "Full Name",
         onValueChange = {
 
@@ -406,7 +428,7 @@ fun TopBar(positionHandler : (x: Int, y: Int) -> Unit ,pair: State<Pair<Int,Int>
         }
         .background(color = Color(0xFFFAF9F9))){
         Row(          modifier = Modifier
-            .padding(top = 20.dp, bottom = 20.dp, start = 10.dp, end = 10.dp)
+            .padding(top = 20.dp, bottom = 20.dp, start = 24.dp, end = 24.dp)
             .onGloballyPositioned {
                 it
                     .positionInWindow()
@@ -428,7 +450,7 @@ fun TopBar(positionHandler : (x: Int, y: Int) -> Unit ,pair: State<Pair<Int,Int>
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .align(alignment = Alignment.Start)
-                        .padding(start = 10.dp)
+                        .padding(start = 0.dp)
                 )
                 val pair = textAndInlineContent("Sant Paulo, Milan, Italy",Color(0xFFDE7254))
                 Text(
@@ -440,13 +462,13 @@ fun TopBar(positionHandler : (x: Int, y: Int) -> Unit ,pair: State<Pair<Int,Int>
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier
                         .align(alignment = Alignment.Start)
-                        .padding(start = 10.dp, top = 8.dp)
+                        .padding(start = 0.dp, top = 8.dp)
                 )
             }
             Image(
                 painter = painterResource(id = R.mipmap.memoji), contentDescription = "google logo",
                 modifier = Modifier
-                    .padding(vertical = 5.dp, horizontal = 10.dp)
+                    .padding(vertical = 5.dp, horizontal = 0.dp)
                     .width(56.dp)
                     .height(56.dp)
                     .align(Alignment.CenterVertically)
@@ -458,6 +480,8 @@ fun TopBar(positionHandler : (x: Int, y: Int) -> Unit ,pair: State<Pair<Int,Int>
     }
 }
 
+
+data class AppNavItem(val id: Int,val defaultIcon: Int,val  selectedIcon: Int,var isSelected: Boolean = false)
 
 
 @Composable
