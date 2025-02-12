@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -49,13 +50,14 @@ fun BoxRow(size: Int) {
                 modifier = Modifier
                     .padding(start = 24.dp, end = 0.dp)
                     .height(206.dp)
+                    .width(intrinsicSize = IntrinsicSize.Min)
             ) {
                 AsyncImage(
-                    model = R.drawable.park1,//"https://picsum.photos/200",//,
+                    model =R.drawable.park1,// "https://picsum.photos/200",//,
                     contentDescription = "box image",
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
-                        .width(161.dp)
+                        .width(181.dp)
                         .height(206.dp)
                         .clip(shape = RoundedCornerShape(10.dp))
                 )

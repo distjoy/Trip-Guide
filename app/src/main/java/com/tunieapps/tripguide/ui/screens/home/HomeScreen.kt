@@ -5,6 +5,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.calculateEndPadding
@@ -21,6 +23,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -28,12 +31,16 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.BottomNavigation
+import androidx.compose.material.ButtonColors
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.IconButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 
 
 import androidx.compose.runtime.Composable
@@ -49,6 +56,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -184,18 +192,33 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
 
             FilterChips(size = 5)
             BoxRow(size = 5)
-            Text(
-                "People Liked",
-                modifier = Modifier.padding(start = 24.dp, top = 30.dp, bottom = 15.dp),
-                style = heading3
-            )
+            Row(modifier = Modifier.padding(start = 24.dp, top = 30.dp, bottom = 15.dp, end = 24.dp)) {
+                Text(
+                    "People Liked",
+                    modifier = Modifier.weight(1f).align(Alignment.CenterVertically),
+                    style = heading3
+                )
+                TextButton(
+                    onClick = {  },
+                ) {
+                        Text("View All",
+                            modifier = Modifier.padding(end = 10.dp),
+                            fontSize = 16.sp,
+                            color = Color(0xFFDE7254),
+                            fontFamily = DMSansFamily,
+                            fontWeight = FontWeight.SemiBold,)
+                    Image(painter =
+                    painterResource(  R.drawable.arrow_right),"")
+                }
+            }
+
 
             Column(modifier = Modifier.padding(start = 24.dp)) {
 
                     Row(
                         modifier = Modifier
                             .padding(start = 0.dp, end = 10.dp, bottom = 15.dp)
-                            .wrapContentHeight()
+                            .height(IntrinsicSize.Min)
                     ) {
                         AsyncImage(
                             model = R.mipmap.cafe,//"https://picsum.photos/200",//,
@@ -210,6 +233,7 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
                         Column(
                             modifier = Modifier
                                 .padding(5.dp)
+                                .weight(1f)
                                 .wrapContentHeight()
                         ) {
                             Text(
@@ -241,11 +265,13 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
                                 PriceTag()
                             }
                         }
-                        IconButton(onClick = {
+                        OutlinedButton (onClick = {
 
-                        },modifier = Modifier
+                        },
+                            contentPadding = PaddingValues(0.dp),modifier = Modifier
                             .fillMaxHeight()
-                            .background(Color.White, shape = RoundedCornerShape(10.dp))) {
+                            .width(30.dp),
+                            border = ButtonDefaults.outlinedBorder.copy(brush = SolidColor(Color(0xFFE7E7EF)))) {
                             Image(painter =
                             painterResource(  R.drawable.arrow_right_angle),"")
                         }
@@ -255,7 +281,7 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
                 Row(
                     modifier = Modifier
                         .padding(start = 0.dp, end = 10.dp, bottom = 15.dp)
-                        .wrapContentHeight()
+                        .height(IntrinsicSize.Min)
                 ) {
                     AsyncImage(
                         model = R.mipmap.cafe,//"https://picsum.photos/200",//,
@@ -270,6 +296,7 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
                     Column(
                         modifier = Modifier
                             .padding(5.dp)
+                            .weight(1f)
                             .wrapContentHeight()
                     ) {
                         Text(
@@ -301,11 +328,13 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
                             PriceTag()
                         }
                     }
-                    IconButton(onClick = {
+                    OutlinedButton (onClick = {
 
-                    },modifier = Modifier
-                        .fillMaxHeight()
-                        .background(Color.White, shape = RoundedCornerShape(10.dp))) {
+                    },
+                        contentPadding = PaddingValues(0.dp),modifier = Modifier
+                            .fillMaxHeight()
+                            .width(30.dp),
+                        border = ButtonDefaults.outlinedBorder.copy(brush = SolidColor(Color(0xFFE7E7EF)))) {
                         Image(painter =
                         painterResource(  R.drawable.arrow_right_angle),"")
                     }
@@ -314,7 +343,7 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
                 Row(
                     modifier = Modifier
                         .padding(start = 0.dp, end = 10.dp, bottom = 15.dp)
-                        .wrapContentHeight()
+                        .height(IntrinsicSize.Min)
                 ) {
                     AsyncImage(
                         model = R.mipmap.cafe,//"https://picsum.photos/200",//,
@@ -329,6 +358,7 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
                     Column(
                         modifier = Modifier
                             .padding(5.dp)
+                            .weight(1f)
                             .wrapContentHeight()
                     ) {
                         Text(
@@ -360,11 +390,75 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
                             PriceTag()
                         }
                     }
-                    IconButton(onClick = {
+                    OutlinedButton (onClick = {
 
-                    },modifier = Modifier
-                        .fillMaxHeight()
-                        .background(Color.White, shape = RoundedCornerShape(10.dp))) {
+                    },
+                        contentPadding = PaddingValues(0.dp),modifier = Modifier
+                            .fillMaxHeight()
+                            .width(30.dp),
+                        border = ButtonDefaults.outlinedBorder.copy(brush = SolidColor(Color(0xFFE7E7EF)))) {
+                        Image(painter =
+                        painterResource(  R.drawable.arrow_right_angle),"")
+                    }
+                }
+
+                Row(
+                    modifier = Modifier
+                        .padding(start = 0.dp, end = 10.dp, bottom = 15.dp)
+                        .height(IntrinsicSize.Min)
+                ) {
+                    AsyncImage(
+                        model = R.mipmap.cafe,//"https://picsum.photos/200",//,
+                        contentDescription = "box image",
+                        contentScale = ContentScale.FillHeight,
+                        modifier = Modifier
+                            .height(78.dp)
+                            .width(78.dp)
+                            .clip(shape = RoundedCornerShape(15.dp))
+                    )
+
+                    Column(
+                        modifier = Modifier
+                            .padding(5.dp)
+                            .weight(1f)
+                            .wrapContentHeight()
+                    ) {
+                        Text(
+                            "Milano Cafe",
+                            style = bodyHeading,
+                            modifier = Modifier.padding(end = 10.dp)
+                        )
+                        AddressText()
+                        Row( modifier = Modifier.padding(end = 10.dp)) {
+                            StarText()
+                            Text(
+                                "|",
+                                style = subTitle,
+                                modifier = Modifier.padding(end = 4.dp),
+                                fontWeight = FontWeight.Medium
+                            )
+                            Text(
+                                "36 Reviews",
+                                style = subTitle,
+                                modifier = Modifier.padding(end = 4.dp),
+                                fontWeight = FontWeight.Medium
+                            )
+                            Text(
+                                "|",
+                                style = subTitle,
+                                modifier = Modifier.padding(end = 4.dp),
+                                fontWeight = FontWeight.Medium
+                            )
+                            PriceTag()
+                        }
+                    }
+                    OutlinedButton (onClick = {
+
+                    },
+                        contentPadding = PaddingValues(0.dp),modifier = Modifier
+                            .fillMaxHeight()
+                            .width(30.dp),
+                        border = ButtonDefaults.outlinedBorder.copy(brush = SolidColor(Color(0xFFE7E7EF)))) {
                         Image(painter =
                         painterResource(  R.drawable.arrow_right_angle),"")
                     }
