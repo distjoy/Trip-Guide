@@ -27,7 +27,9 @@ import androidx.navigation.compose.rememberNavController
 import com.tunieapps.tripguide.ui.Screen
 import com.tunieapps.tripguide.ui.screens.home.HomeScreen
 import com.tunieapps.tripguide.ui.theme.TripGuideTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

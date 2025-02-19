@@ -19,7 +19,7 @@ class NetworkModule {
     @Provides
     fun providesOkhttp() : OkHttpClient{
        return OkHttpClient.Builder()
-            .addNetworkInterceptor(HttpLoggingInterceptor())
+            .addNetworkInterceptor(HttpLoggingInterceptor (logger = HttpLoggingInterceptor.Logger.DEFAULT))
             .callTimeout(Duration.ofSeconds(30))
             .build()
 
@@ -28,7 +28,7 @@ class NetworkModule {
     @Provides
     fun providesRetrofit() : Retrofit{
         return Retrofit.Builder()
-            .baseUrl("https://maps.googleapis.com/maps/api/place/")
+            .baseUrl("https://places.googleapis.com")
             .addConverterFactory(Json.asConverterFactory("application/json; charset=UTF8".toMediaType()))
             .build()
 

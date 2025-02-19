@@ -44,6 +44,7 @@ import androidx.compose.material3.TextButton
 
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -71,6 +72,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil3.compose.AsyncImage
 import com.tunieapps.tripguide.DMSansFamily
 import com.tunieapps.tripguide.R
@@ -90,7 +92,7 @@ import kotlin.math.abs
 
 
 @Composable
-fun HomeScreen(launcher: (screen : Screen) -> Unit){
+fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), launcher: (screen : Screen) -> Unit){
     val menu = listOf(AppNavItem(1,R.drawable.home_line,R.drawable.home_filled,true),
      AppNavItem(1,R.drawable.heart_line,R.drawable.heart_line,true),
     AppNavItem(1,R.drawable.notification_line,R.drawable.notification_line,true),
@@ -99,6 +101,10 @@ fun HomeScreen(launcher: (screen : Screen) -> Unit){
     val pair = remember { mutableStateOf(Pair(0,0)) }
     val originalPos = remember {mutableStateOf(Pair(-1,-1)) }
     val st = with(LocalDensity. current) { WindowInsets.statusBars.getBottom(this) + 20.dp. roundToPx().toFloat() }
+
+    LaunchedEffect(Unit) {
+        viewModel.getPlaces()
+    }
 
     val nestedScrollConnection =  remember {
         object : NestedScrollConnection {
@@ -582,6 +588,6 @@ data class AppNavItem(val id: Int,val defaultIcon: Int,val  selectedIcon: Int,va
 @Preview(showBackground = true)
 fun HomeScreenPreview(){
     TripGuideTheme {
-        HomeScreen({})
+        HomeScreen(launcher = {})
     }
 }

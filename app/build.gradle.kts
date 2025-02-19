@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.hilt)
+    kotlin("plugin.serialization") version "1.9.21"
     id("kotlin-kapt")
 }
 
@@ -82,6 +83,7 @@ dependencies {
     implementation(libs.kotlin.serialization)
     implementation(libs.coil.network.okhttp)
     implementation(libs.hilt)
+    implementation(libs.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
