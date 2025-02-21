@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import coil3.compose.AsyncImage
 import com.tunieapps.tripguide.R
+import com.tunieapps.tripguide.model.Place
 import com.tunieapps.tripguide.ui.theme.TripGuideTheme
 import com.tunieapps.tripguide.ui.theme.bodyHeading
 import com.tunieapps.tripguide.ui.theme.subTitle
@@ -43,9 +44,11 @@ import com.tunieapps.tripguide.ui.theme.subTitleDark
 import com.tunieapps.tripguide.ui.theme.white
 
 @Composable
-fun BoxRow(size: Int) {
+fun BoxRow(places : List<Place>) {
     LazyRow(modifier = Modifier.padding(top = 20.dp)) {
-        items(count = size) {
+        items(count = places.size) { index ->
+            val place = places[index]
+
             Box(
                 modifier = Modifier
                     .padding(start = 24.dp, end = 0.dp)
@@ -53,7 +56,7 @@ fun BoxRow(size: Int) {
                     .width(intrinsicSize = IntrinsicSize.Min)
             ) {
                 AsyncImage(
-                    model =R.drawable.park1,// "https://picsum.photos/200",//,
+                    model = place.photo,
                     contentDescription = "box image",
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
@@ -71,13 +74,13 @@ fun BoxRow(size: Int) {
 
                 ) {
                     Text(
-                        "Milano Park",
+                        place.displayName,
                         style = bodyHeading,
                         modifier = Modifier.padding(end = 10.dp, bottom = 5.dp)
                     )
                     AddressText()
                     Row {
-                        StarText()
+                        StarText(place.ratings)
                         Text(
                             "|",
                             style = subTitle,
@@ -85,7 +88,7 @@ fun BoxRow(size: Int) {
                             fontWeight = FontWeight.Medium
                         )
                         Text(
-                            "36 Reviews",
+                            "${place.reviews} Reviews",
                             style = subTitle,
                             fontWeight = FontWeight.Medium
                         )
@@ -115,11 +118,11 @@ fun PriceTag() {
 }
 
 @Composable
-fun StarText() {
+fun StarText(rating : Double ) {
     val myId = "ratingStar"
     val text = buildAnnotatedString {
         appendInlineContent(myId, "[star]")
-        append("4.0")
+        append(rating.toString())
     }
     val inlineContent = mapOf(
         Pair(
@@ -193,6 +196,7 @@ fun AddressText() {
 @Preview(showBackground = true)
 fun BoxRowPreview(){
     TripGuideTheme {
-        BoxRow(5)
+        BoxRow(listOf(Place("","Test name","type", emptyList(),
+            "",4.00,345,"")))
     }
 }

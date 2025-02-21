@@ -30,14 +30,13 @@ class HomeViewModel @Inject constructor(val placeRepository: PlacesRepository) :
                 val places : MutableList<Place> = mutableListOf()
                 it.forEach { place ->
                     places.add(
-                      Place(place.id,place.displayName.text, "", emptyList(),
-                          place.photos[0].name,place.rating,place.reviews,place.shortAddress)
+                      Place(place.id,place.displayName.text, place.primaryType, emptyList(),
+                          place.getFullImageUri(),place.rating,place.reviews,place.shortAddress)
                     )
                 }
                 places
             }.onEach{
-            Log.d("HomeViewModel", "getPlaces: ${it}")
-
+            _places.value =  it
         }.catch {
             it.printStackTrace()
         } .launchIn(viewModelScope)

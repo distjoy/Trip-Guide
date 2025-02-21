@@ -1,5 +1,6 @@
 package com.tunieapps.tripguide.dependencies
 
+import com.tunieapps.tripguide.model.Constants.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,7 +32,7 @@ class NetworkModule {
     fun providesRetrofit(okHttpClient: OkHttpClient) : Retrofit{
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl("https://places.googleapis.com")
+            .baseUrl(BASE_URL)
             .addConverterFactory(Json.asConverterFactory("application/json; charset=UTF8".toMediaType()))
             .build()
 
