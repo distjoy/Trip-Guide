@@ -9,9 +9,13 @@ import javax.inject.Inject
 
 class PlacesRepository (val placesApi: PlacesApi) {
 
-    fun getPlaces() : Flow<List<PlacesResponse>> {
+    fun getPlaces() : Flow<List<PlaceResponse>> {
        return flow {
-            placesApi.getPlaces(PlacesRequestBody(types = emptyList(), count = 10, constraints = LocationRestriction(Circle(Center(37.7937,-122.3965),500.0))),"")
+           val response =  placesApi.getPlaces(PlacesRequestBody(types = emptyList(), count = 10,
+                constraints = LocationRestriction(Circle(Center(37.7937,-122.3965),500.0))),
+                "")
+
+           emit(response.results)
         }
     }
 }

@@ -25,8 +25,18 @@ class HomeViewModel @Inject constructor(val placeRepository: PlacesRepository) :
     val places = _places as StateFlow<List<Place>>
 
     fun getPlaces(placesFilter: PlacesFilter = PlacesFilter.All) {
-        placeRepository.getPlaces().onEach{
-            Log.d("HomeViewModel", "getPlaces: ${it.toString()}")
+        placeRepository.getPlaces()
+            .map {
+                val places : MutableList<Place> = mutableListOf()
+                it.forEach { place ->
+                    places.add(
+                      Place(place.id,place.displayName.text, "", emptyList(),
+                          place.photos[0].name,place.rating,place.reviews,place.shortAddress)
+                    )
+                }
+                places
+            }.onEach{
+            Log.d("HomeViewModel", "getPlaces: ${it}")
 
         }.catch {
             it.printStackTrace()

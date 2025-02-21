@@ -12,6 +12,6 @@ data class  PlacesRequestBody (@SerialName("includedTypes")  val types : List<St
 data class LocationRestriction(@SerialName("circle")  val location : Circle)
 
 @Serializable
-data class Circle( val center : Center,@SerialName("locationRestriction") val radius : Double)
+data class Circle( val center : Center, val radius : Double)
 @Serializable
 data class Center(val latitude : Double, val longitude : Double)

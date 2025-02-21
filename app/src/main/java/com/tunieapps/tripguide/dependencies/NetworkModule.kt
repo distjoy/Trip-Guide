@@ -18,16 +18,19 @@ class NetworkModule {
 
     @Provides
     fun providesOkhttp() : OkHttpClient{
+      val logger =   HttpLoggingInterceptor ()
+        logger.level = HttpLoggingInterceptor.Level.BODY
        return OkHttpClient.Builder()
-            .addNetworkInterceptor(HttpLoggingInterceptor (logger = HttpLoggingInterceptor.Logger.DEFAULT))
+            .addNetworkInterceptor(logger)
             .callTimeout(Duration.ofSeconds(30))
             .build()
 
     }
 
     @Provides
-    fun providesRetrofit() : Retrofit{
+    fun providesRetrofit(okHttpClient: OkHttpClient) : Retrofit{
         return Retrofit.Builder()
+            .client(okHttpClient)
             .baseUrl("https://places.googleapis.com")
             .addConverterFactory(Json.asConverterFactory("application/json; charset=UTF8".toMediaType()))
             .build()
