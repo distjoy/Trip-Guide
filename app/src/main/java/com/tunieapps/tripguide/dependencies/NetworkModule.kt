@@ -1,6 +1,6 @@
 package com.tunieapps.tripguide.dependencies
 
-import com.tunieapps.tripguide.model.Constants.Companion.BASE_URL
+import com.tunieapps.tripguide.model.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

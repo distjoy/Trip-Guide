@@ -202,6 +202,9 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), launcher: (screen: Sc
                     start = padding.calculateStartPadding(LayoutDirection.Ltr),
                     end = padding.calculateEndPadding(LayoutDirection.Ltr),
                 )
+                .offset {
+                    IntOffset(0, pair.value.second)
+                }
         ) {
 
             item {

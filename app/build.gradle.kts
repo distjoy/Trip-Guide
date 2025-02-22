@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -6,9 +8,18 @@ plugins {
     id("kotlin-kapt")
 }
 
+val configFile = file("../.gradle/config.properties")
+val properties =  Properties()
+if (configFile.exists()) {
+
+    configFile.inputStream().use { properties.load(it) }
+}
+
 android {
     namespace = "com.tunieapps.tripguide"
     compileSdk = 35
+
+
 
     defaultConfig {
         applicationId = "com.tunieapps.tripguide"
@@ -17,10 +28,16 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        buildFeatures {
+            buildConfig = true
+        }
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField("String","gmsApiKey",properties.getProperty("gmsApiKey") ?: "")
     }
 
     buildTypes {

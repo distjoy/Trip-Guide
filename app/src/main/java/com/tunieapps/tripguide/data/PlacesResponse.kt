@@ -1,7 +1,7 @@
 package com.tunieapps.tripguide.data
 
-import com.tunieapps.tripguide.model.Constants.Companion.API_KEY
-import com.tunieapps.tripguide.model.Constants.Companion.BASE_URL
+import com.tunieapps.tripguide.model.Constants.GMS_API_KEY
+import com.tunieapps.tripguide.model.Constants.BASE_URL
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -23,7 +23,7 @@ data class PlaceResponse(val id : String, val name : String, val displayName : D
                          @SerialName("iconMaskBaseUri") val icon : String, val photos : List<Photo>,
                          @SerialName("userRatingCount")val reviews : Int){
     fun getFullImageUri() : String{
-        return "$BASE_URL/v1/${photos[0].name}/media?maxHeightPx=400&maxWidthPx=400&key=$API_KEY"
+        return "$BASE_URL/v1/${photos[0].name}/media?maxHeightPx=400&maxWidthPx=400&key=$GMS_API_KEY"
     }
 }
 
