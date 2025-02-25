@@ -3,7 +3,6 @@ package com.tunieapps.tripguide.ui.screens.home
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,30 +11,21 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.IconButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -49,7 +39,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -59,7 +48,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
@@ -81,16 +69,11 @@ import com.tunieapps.tripguide.DMSansFamily
 import com.tunieapps.tripguide.R
 import com.tunieapps.tripguide.ui.Screen
 import com.tunieapps.tripguide.ui.SearchInputField
-import com.tunieapps.tripguide.ui.TgFilledTextField
-import com.tunieapps.tripguide.ui.TgOutlinedTextField
 import com.tunieapps.tripguide.ui.textAndInlineContent
 import com.tunieapps.tripguide.ui.theme.TripGuideTheme
 import com.tunieapps.tripguide.ui.theme.bodyHeading
-import com.tunieapps.tripguide.ui.theme.bodyText
-import com.tunieapps.tripguide.ui.theme.heading1
 import com.tunieapps.tripguide.ui.theme.heading3
 import com.tunieapps.tripguide.ui.theme.subTitle
-import com.tunieapps.tripguide.ui.theme.white
 import kotlin.math.abs
 
 
@@ -192,10 +175,10 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), launcher: (screen: Sc
         containerColor = Color(0xFFFAF9F9),
         contentWindowInsets = WindowInsets(0.dp)
     ) { padding ->
-
+        val places = viewModel.places.collectAsState().value
         LazyColumn(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(
                     top = padding.calculateTopPadding(),
                     bottom = 100.dp,
@@ -207,6 +190,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), launcher: (screen: Sc
                 }
         ) {
 
+
             item {
                 Text(
                     "Discover Places",
@@ -214,8 +198,8 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), launcher: (screen: Sc
                     style = heading3
                 )
 
-                FilterChips(size = 5)
-                BoxRow(viewModel.places.collectAsState().value)
+                FilterChips(viewModel.typeFilters.collectAsState().value,viewModel::onTypeFilterClicked)
+                BoxRow(places)
                 Row(
                     modifier = Modifier.padding(
                         start = 24.dp,
@@ -253,14 +237,15 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), launcher: (screen: Sc
 
 
 
-            items(4) {
+            items(places.size) { ind ->
+                val place = places[ind]
                 Row(
                     modifier = Modifier
                         .padding(start = 24.dp, end = 10.dp, bottom = 15.dp)
                         .height(IntrinsicSize.Min)
                 ) {
                     AsyncImage(
-                        model = R.mipmap.cafe,//"https://picsum.photos/200",//,
+                        model = place.photo,//"https://picsum.photos/200",//,
                         contentDescription = "box image",
                         contentScale = ContentScale.FillHeight,
                         modifier = Modifier
@@ -276,13 +261,13 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), launcher: (screen: Sc
                             .wrapContentHeight()
                     ) {
                         Text(
-                            "Milano Cafe",
+                            place.displayName,
                             style = bodyHeading,
                             modifier = Modifier.padding(end = 10.dp)
                         )
-                        AddressText()
+                        AddressText(place.address)
                         Row(modifier = Modifier.padding(end = 10.dp)) {
-                            StarText(4.0)
+                            StarText(place.ratings)
                             Text(
                                 "|",
                                 style = subTitle,
@@ -290,7 +275,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), launcher: (screen: Sc
                                 fontWeight = FontWeight.Medium
                             )
                             Text(
-                                "36 Reviews",
+                                "${place.reviews} Reviews",
                                 style = subTitle,
                                 modifier = Modifier.padding(end = 4.dp),
                                 fontWeight = FontWeight.Medium

@@ -78,7 +78,7 @@ fun BoxRow(places : List<Place>) {
                         style = bodyHeading,
                         modifier = Modifier.padding(end = 10.dp, bottom = 5.dp)
                     )
-                    AddressText()
+                    AddressText(place.address)
                     Row {
                         StarText(place.ratings)
                         Text(
@@ -155,11 +155,11 @@ fun StarText(rating : Double ) {
 }
 
 @Composable
-fun AddressText() {
+fun AddressText(address : String) {
     val myId = "addressIcon"
     val text = buildAnnotatedString {
         appendInlineContent(myId, "[address]")
-        append("Saint Paulo, Milan, Italy")
+        append(address)
     }
     val inlineContent = mapOf(
         Pair(
