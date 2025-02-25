@@ -45,7 +45,7 @@ import com.tunieapps.tripguide.ui.theme.white
 
 @Composable
 fun BoxRow(places : List<Place>) {
-    LazyRow(modifier = Modifier.padding(top = 20.dp)) {
+    LazyRow(modifier = Modifier.padding(top = 20.dp).height(206.dp)) {
         items(count = places.size) { index ->
             val place = places[index]
 

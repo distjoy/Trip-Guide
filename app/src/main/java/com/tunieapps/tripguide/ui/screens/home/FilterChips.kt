@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
@@ -15,10 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.tunieapps.tripguide.R
+import androidx.compose.ui.unit.sp
+import com.tunieapps.tripguide.DMSansFamily
 import com.tunieapps.tripguide.model.PlaceType
-import com.tunieapps.tripguide.ui.theme.bodyText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,7 +30,6 @@ fun FilterChips(types: List<PlaceType>,onSelected: (type: PlaceType) -> Unit) {
     LazyRow(modifier = Modifier.padding(top = 10.dp)) {
         items(count = types.size) { index ->
             val type = types[index]
-            val color = if(type.selected) Color(0xFFDE7254) else Color(0xFF828F9C)
             FilterChip(
                 modifier = Modifier
                     .padding(paddingValues = PaddingValues(start = 27.dp, end = 0.dp))
@@ -38,7 +39,13 @@ fun FilterChips(types: List<PlaceType>,onSelected: (type: PlaceType) -> Unit) {
                     onSelected(type)
                 },
                 label = {
-                    Text(type.displayName)
+                    //Material2 Text color not functional with M3 FilterChip - SelectableChipColors so using Material3 Text instead
+                    Text(type.displayName,
+                        fontSize = 14.sp,
+                        fontFamily = DMSansFamily,
+                        fontWeight = FontWeight.Medium,
+                        textAlign = TextAlign.Left,
+                        modifier = Modifier.padding(end = 14.dp))
                 },
                 selected = type.selected,
                 leadingIcon = {
@@ -66,7 +73,12 @@ fun FilterChips(types: List<PlaceType>,onSelected: (type: PlaceType) -> Unit) {
 
                 ),
                 border = FilterChipDefaults.filterChipBorder(
-                    borderColor = Color(0xFFE7E7EF)
+                    borderColor = Color(0xFFE7E7EF),
+                    selectedBorderColor = Color(0xFFDE7254),
+                    disabledBorderColor = Color(0xFFE7E7EF),
+                    disabledSelectedBorderColor = Color(0xFFDE7254),
+                    borderWidth = 1.dp,
+                    selectedBorderWidth = 1.dp
                 )
 
             )

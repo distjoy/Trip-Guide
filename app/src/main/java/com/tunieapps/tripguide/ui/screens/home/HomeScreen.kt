@@ -199,7 +199,10 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), launcher: (screen: Sc
                     style = heading3
                 )
 
-                FilterChips(viewModel.typeFilters.collectAsState().value,viewModel::onTypeFilterClicked)
+                FilterChips(
+                    viewModel.typeFilters.collectAsState().value,
+                    viewModel::onTypeFilterClicked
+                )
                 BoxRow(placesByFilter)
                 Row(
                     modifier = Modifier.padding(
