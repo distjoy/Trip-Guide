@@ -175,7 +175,8 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), launcher: (screen: Sc
         containerColor = Color(0xFFFAF9F9),
         contentWindowInsets = WindowInsets(0.dp)
     ) { padding ->
-        val places = viewModel.places.collectAsState().value
+        val placesByFilter = viewModel.placesByFilter.collectAsState().value
+        val likedPlaces = viewModel.likedPlaces.collectAsState(emptyList()).value
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
@@ -199,7 +200,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), launcher: (screen: Sc
                 )
 
                 FilterChips(viewModel.typeFilters.collectAsState().value,viewModel::onTypeFilterClicked)
-                BoxRow(places)
+                BoxRow(placesByFilter)
                 Row(
                     modifier = Modifier.padding(
                         start = 24.dp,
@@ -237,8 +238,8 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), launcher: (screen: Sc
 
 
 
-            items(places.size) { ind ->
-                val place = places[ind]
+            items(likedPlaces.size) { ind ->
+                val place = likedPlaces[ind]
                 Row(
                     modifier = Modifier
                         .padding(start = 24.dp, end = 10.dp, bottom = 15.dp)

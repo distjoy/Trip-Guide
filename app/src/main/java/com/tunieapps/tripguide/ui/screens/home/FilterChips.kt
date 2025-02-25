@@ -38,8 +38,7 @@ fun FilterChips(types: List<PlaceType>,onSelected: (type: PlaceType) -> Unit) {
                     onSelected(type)
                 },
                 label = {
-                    Text("Filter chip", style = bodyText,
-                        modifier = Modifier.padding(end = 14.dp) )
+                    Text(type.displayName)
                 },
                 selected = type.selected,
                 leadingIcon = {
