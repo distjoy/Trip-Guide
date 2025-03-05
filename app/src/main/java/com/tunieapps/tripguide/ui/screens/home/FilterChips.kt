@@ -33,7 +33,6 @@ fun FilterChips(types: List<PlaceType>,onSelected: (type: PlaceType) -> Unit) {
             FilterChip(
                 modifier = Modifier
                     .padding(paddingValues = PaddingValues(start = 27.dp, end = 0.dp))
-
                 ,
                 onClick = {
                     onSelected(type)

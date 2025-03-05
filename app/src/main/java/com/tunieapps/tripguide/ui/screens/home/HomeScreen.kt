@@ -69,6 +69,7 @@ import com.tunieapps.tripguide.DMSansFamily
 import com.tunieapps.tripguide.R
 import com.tunieapps.tripguide.ui.Screen
 import com.tunieapps.tripguide.ui.SearchInputField
+import com.tunieapps.tripguide.ui.screens.PlacesViewModel
 import com.tunieapps.tripguide.ui.textAndInlineContent
 import com.tunieapps.tripguide.ui.theme.TripGuideTheme
 import com.tunieapps.tripguide.ui.theme.bodyHeading
@@ -78,113 +79,24 @@ import kotlin.math.abs
 
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), launcher: (screen: Screen) -> Unit) {
-    val menu = listOf(
-        AppNavItem(1, R.drawable.home_line, R.drawable.home_filled, true),
-        AppNavItem(1, R.drawable.heart_line, R.drawable.heart_line, true),
-        AppNavItem(1, R.drawable.notification_line, R.drawable.notification_line, true),
-        AppNavItem(1, R.drawable.profile_line, R.drawable.profile_line, true)
-    )
-    val scrollState = rememberScrollState()
-    val pair = remember { mutableStateOf(Pair(0, 0)) }
-    val originalPos = remember { mutableStateOf(Pair(-1, -1)) }
-    val st = with(LocalDensity.current) {
-        WindowInsets.statusBars.getBottom(this) + 20.dp.roundToPx().toFloat()
-    }
+fun HomeScreen(parentPaddingValues: PaddingValues, viewModel: PlacesViewModel = hiltViewModel(), launcher: (screen: Screen) -> Unit) {
+
 
     LaunchedEffect(Unit) {
         viewModel.getPlaces()
     }
 
-    val lazyListState = rememberLazyListState()
 
-    val nestedScrollConnection = remember {
-        object : NestedScrollConnection {
-            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-
-                val new = pair.value.second + available.y.toInt()
-
-                if (new <= 0) {
-                    if ((originalPos.value.second - st) >= abs(new)) {
-                        pair.value = Pair(0, pair.value.second + available.y.toInt())
-
-                    }
-
-                }
-
-                return Offset.Zero
-            }
-        }
-    }
-    Scaffold(
-        modifier = Modifier
-            .background(color = Color(0xFFFAF9F9))
-            .nestedScroll(nestedScrollConnection)
-            .safeDrawingPadding(),
-        topBar = {
-            TopBar({ x: Int, y: Int ->
-                if (originalPos.value.second == -1 || originalPos.value.first == -1)
-                    originalPos.value = Pair(x, y)
-            }, pair)
-        },
-        bottomBar = {
-            NavigationBar(
-                modifier = Modifier
-                    .padding(top = 0.dp, bottom = 0.dp)
-                    .background(color = Color(0xFFFAF9F9))
-                    .shadow(
-                        35.dp, RoundedCornerShape(
-                            CornerSize(0.dp)
-                        ), ambientColor = Color(0xFF2A2A2A),
-                        spotColor = Color(0xFF2A2A2A)
-                    ),
-                containerColor = Color(0xFFFAF9F9),
-                contentColor = Color(0xFFDE7254),
-                tonalElevation = 2.dp
-            ) {
-
-                menu.forEach({
-
-                    val icon = if (it.isSelected) {
-                        it.selectedIcon
-                    } else it.defaultIcon
-
-                    NavigationBarItem(
-                        selected = false,
-                        onClick = { launcher(Screen.Home) },
-                        icon = {
-                            Image(
-                                painter = painterResource(id = icon),
-                                contentDescription = "Discover places banner",
-                                Modifier
-                                    .height(24.dp)
-                                    .width(24.dp),
-                                colorFilter = ColorFilter.tint(Color(0xFFDE7254))
-                            )
-                        },
-                        enabled = true,
-                        alwaysShowLabel = false,
-                        modifier = Modifier
-
-                    )
-
-                })
-            }
-
-        },
-        containerColor = Color(0xFFFAF9F9),
-        contentWindowInsets = WindowInsets(0.dp)
-    ) { padding ->
         val placesByFilter = viewModel.placesByFilter.collectAsState().value
         val likedPlaces = viewModel.likedPlaces.collectAsState(emptyList()).value
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    top = padding.calculateTopPadding(),
+                    top = parentPaddingValues.calculateTopPadding(),
                     bottom = 100.dp,
-                    start = padding.calculateStartPadding(LayoutDirection.Ltr),
-                    end = padding.calculateEndPadding(LayoutDirection.Ltr),
+                    start = parentPaddingValues.calculateStartPadding(LayoutDirection.Ltr),
+                    end = parentPaddingValues.calculateEndPadding(LayoutDirection.Ltr),
                 )
                 .offset {
                     IntOffset(0, pair.value.second)
@@ -318,7 +230,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), launcher: (screen: Sc
 
         }
 
-    }
+
 }
 
 

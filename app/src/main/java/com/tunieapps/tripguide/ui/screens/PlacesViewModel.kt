@@ -1,4 +1,4 @@
-package com.tunieapps.tripguide.ui.screens.home
+package com.tunieapps.tripguide.ui.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,12 +23,11 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.shareIn
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(val placeRepository: PlacesRepository) : ViewModel(){
+class PlacesViewModel @Inject constructor(val placeRepository: PlacesRepository) : ViewModel(){
 
     private val _likedPlaces =   placeRepository.getPlaces(ALL.tags)
         .map {
