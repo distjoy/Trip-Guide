@@ -56,10 +56,10 @@ class MainActivity : ComponentActivity() {
 
             // A surface container using the 'background' color from the theme
             val navController = rememberNavController()
-            AppContainer() {
+           /* AppContainer() {
 
 
-            }
+            }*/
             NavHost(navController = navController, startDestination = Screen.Landing.screenTag) {
                 composable(Screen.Landing.screenTag) {
                     TripGuideTheme {
@@ -106,9 +106,9 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = Color(0xFFFFFFFF)
                         ) {
-                            HomeScreen {
+                           /* HomeScreen {
                                 navigator(navController, it)
-                            }
+                            }*/
                         }
 
                     }

@@ -98,9 +98,9 @@ fun HomeScreen(parentPaddingValues: PaddingValues, viewModel: PlacesViewModel = 
                     start = parentPaddingValues.calculateStartPadding(LayoutDirection.Ltr),
                     end = parentPaddingValues.calculateEndPadding(LayoutDirection.Ltr),
                 )
-                .offset {
+               /* .offset {
                     IntOffset(0, pair.value.second)
-                }
+                }*/
         ) {
 
 
@@ -348,6 +348,6 @@ data class AppNavItem(
 @Preview(showBackground = true)
 fun HomeScreenPreview() {
     TripGuideTheme {
-        HomeScreen(launcher = {})
+        //HomeScreen(launcher = {})
     }
 }

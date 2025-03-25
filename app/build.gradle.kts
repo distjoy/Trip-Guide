@@ -8,7 +8,7 @@ plugins {
     id("kotlin-kapt")
 }
 
-val configFile = file("../.gradle/config.properties")
+val configFile = file("../config.properties")
 val properties =  Properties()
 if (configFile.exists()) {
 
@@ -63,11 +63,11 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.7"
     }
-    packaging {
+/*    packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
-    }
+    }*/
 }
 // Allow references to generated code
 kapt {
