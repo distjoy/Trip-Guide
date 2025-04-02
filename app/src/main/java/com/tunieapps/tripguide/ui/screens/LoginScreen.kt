@@ -106,7 +106,7 @@ fun LoginScreen(launcher : (screen : Screen) -> Unit) {
             TgPrimaryButton(
                 text = "Login",
                 onClick = {
-                    launcher.invoke(Screen.Home)
+                    launcher.invoke(Screen.HomeContainer)
                 }
             )
 
