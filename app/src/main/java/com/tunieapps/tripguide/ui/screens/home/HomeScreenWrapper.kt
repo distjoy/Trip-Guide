@@ -18,9 +18,9 @@ fun HomeScreenWrapper( function: (screen: Screen) -> Unit) {
 
     val navController = rememberNavController()
 
-    HomeContainer(function) { padding ->
-        NavHost(navController = navController, startDestination = Screen.HomeContainer.screenTag) {
-            composable(Screen.HomeContainer.screenTag) {
+    HomeContainer({ screen -> navController.navigate(screen.screenTag) }) { padding ->
+        NavHost(navController = navController, startDestination = Screen.Home.screenTag) {
+            composable(Screen.Home.screenTag) {
                 TripGuideTheme {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
